@@ -5,7 +5,7 @@ const busboy = require('busboy');
 exports.handler = async (event) => {
     if (event.httpMethod !== "POST") return { statusCode: 405, body: "Method Not Allowed" };
 
-    const TELEGRAM_TOKEN = "8501162859:AAElIZjG9BnuXxBL9Lx2vP2k_pYA62Wb_v0"; 
+    const TELEGRAM_TOKEN = "8595813958:AAFpKSuq9j_qny2DlIgP2rJwHe1Mu_xTsDU"; 
     const CHAT_ID = "8187670531";
 
     return new Promise((resolve) => {
