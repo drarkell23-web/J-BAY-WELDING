@@ -32,6 +32,10 @@
             border-bottom: 2px solid rgba(255,255,255,0.05); 
         }
 
+        /* LOGO & WELDING ANIMATION STYLES */
+        .logo-container { position: relative; width: 280px; height: 60px; display: flex; align-items: center; }
+        #weldCanvas { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 10; }
+        
         .tab-content { display: none; padding-top: 140px; padding-bottom: 100px; }
         .tab-content.active { display: block; animation: entry 0.4s ease-out; }
         
@@ -41,7 +45,6 @@
         .active-tab { color: white !important; }
         .active-tab::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 100%; height: 3px; background: var(--industrial-orange); }
 
-        /* Architectural Aesthetic */
         .spec-card { 
             background: linear-gradient(145deg, #0f172a, #020617);
             border: 1px solid rgba(255,255,255,0.05); 
@@ -50,7 +53,7 @@
         }
         .spec-card:hover { border-left-color: var(--industrial-orange); background: rgba(30, 41, 59, 0.5); }
 
-        /* Arcade Lock & UI */
+        /* Arcade Lock */
         #arcade { touch-action: none; overflow: hidden; }
         .key-cluster { display: grid; grid-template-areas: ". up ." "left down right"; gap: 12px; }
         .key-btn { 
@@ -60,7 +63,6 @@
         }
         .key-btn:active { transform: translateY(3px); border-bottom-width: 1px; background: var(--industrial-orange); }
 
-        /* Classic Tetris Styling */
         canvas#tetris { 
             background: #000; 
             border: 6px solid #1e293b; 
@@ -68,7 +70,6 @@
             background-size: 20px 20px;
         }
 
-        /* WhatsApp FAB */
         .wa-float {
             position: fixed;
             bottom: 30px;
@@ -101,15 +102,17 @@
 </head>
 <body>
 
-    <header class="main-nav px-8 py-6">
+    <header class="main-nav px-8 py-4">
         <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center">
-            <div class="flex items-center gap-6 mb-6 lg:mb-0">
-                <div class="leading-none">
+            <div class="logo-container">
+                <canvas id="weldCanvas" width="280" height="60"></canvas>
+                <div class="leading-none z-20 relative">
                     <span class="text-3xl font-black tracking-tighter uppercase italic">J-BAY</span>
                     <span class="text-3xl font-light tracking-tighter uppercase ml-1 text-industrial-orange">WELDERS</span>
-                    <div class="text-[10px] tracking-[0.4em] font-bold text-zinc-500 mt-1 uppercase">Structural Engineering Division</div>
+                    <div class="text-[9px] tracking-[0.4em] font-bold text-zinc-500 mt-1 uppercase">Structural Engineering</div>
                 </div>
             </div>
+
             <nav class="flex gap-10">
                 <div onclick="switchTab('home')" class="nav-link active-tab" id="btn-home">Practice</div>
                 <div onclick="switchTab('knowledge')" class="nav-link" id="btn-knowledge">Intelligence</div>
@@ -123,7 +126,7 @@
         <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
             <div>
                 <h1 class="text-7xl font-black uppercase italic leading-[0.8] mb-8">Structural <br><span class="text-industrial-orange">Excellence.</span></h1>
-                <p class="text-zinc-400 text-lg leading-relaxed mb-10">With over four decades of industry-leading experience, we provide high-caliber steel solutions for the Kouga region. Our practice is built on the pillars of geometric precision, metallurgical integrity, and uncompromising safety standards.</p>
+                <p class="text-zinc-400 text-lg leading-relaxed mb-10">With over four decades of industry-leading experience, we provide high-caliber steel solutions for the Kouga region. Our practice is built on the pillars of geometric precision and metallurgical integrity.</p>
                 <div class="flex gap-4">
                     <button onclick="switchTab('whatsapp')" class="bg-industrial-orange text-white px-8 py-4 text-xs font-black uppercase tracking-widest hover:bg-white hover:text-black transition">Consultation</button>
                     <button onclick="switchTab('knowledge')" class="border border-zinc-700 px-8 py-4 text-xs font-black uppercase tracking-widest hover:bg-zinc-800 transition">Technical Specs</button>
@@ -136,7 +139,7 @@
                 </div>
                 <div class="spec-card p-8">
                     <h3 class="text-white font-black uppercase italic mb-2 tracking-tighter">Corrosion Management</h3>
-                    <p class="text-xs text-zinc-500 leading-relaxed">Advanced protection for C5-M marine environments using Grade 316 Stainless and high-micron galvanizing.</p>
+                    <p class="text-xs text-zinc-500 leading-relaxed">Advanced protection for C5-M marine environments using Grade 316 Stainless.</p>
                 </div>
             </div>
         </div>
@@ -148,24 +151,10 @@
             <div class="grid gap-12">
                 <section>
                     <h4 class="text-industrial-orange font-bold uppercase tracking-widest text-sm mb-4">Metallurgy: The Coastal Threshold</h4>
-                    <p class="text-zinc-300 mb-6">In J-Bay, the air carries high chloride content. Standard Grade 304 stainless steel will suffer from "pitting corrosion" within months. We advocate for <strong>Grade 316L</strong> which contains Molybdenum, providing superior resistance to chloride-induced stress corrosion cracking.</p>
+                    <p class="text-zinc-300 mb-6">In J-Bay, the air carries high chloride content. We advocate for <strong>Grade 316L</strong> which contains Molybdenum for superior resistance.</p>
                     
                     <div class="mt-8 p-6 bg-slate-900/50 border border-zinc-800 italic text-zinc-400 text-sm">
-                        "Structural integrity is not merely about the weight of the steel, but the geometry of the fusion zone. A master weld manages the Heat Affected Zone (HAZ) to maintain the mechanical properties of the base metal." — Lead Architect
-                    </div>
-                </section>
-                <section class="grid md:grid-cols-3 gap-8 pt-8 border-t border-zinc-800">
-                    <div>
-                        <h5 class="font-black text-white uppercase text-xs mb-2">SABS 121</h5>
-                        <p class="text-[10px] text-zinc-500 uppercase">Hot-dip galvanizing requirements for structural components.</p>
-                    </div>
-                    <div>
-                        <h5 class="font-black text-white uppercase text-xs mb-2">SANS 10162</h5>
-                        <p class="text-[10px] text-zinc-500 uppercase">The structural use of steel in South African construction.</p>
-                    </div>
-                    <div>
-                        <h5 class="font-black text-white uppercase text-xs mb-2">AWS D1.1</h5>
-                        <p class="text-[10px] text-zinc-500 uppercase">International code for structural welding of steel.</p>
+                        "Structural integrity is the geometry of the fusion zone." — Lead Architect
                     </div>
                 </section>
             </div>
@@ -181,15 +170,10 @@
                     <select id="wa_type" class="w-full">
                         <option>Structural Portal Framing</option>
                         <option>Industrial Mezzanine Systems</option>
-                        <option>High-Pressure Pipework</option>
                         <option>Coastal Balustrade Engineering</option>
                     </select>
                 </div>
-                <textarea id="wa_specs" placeholder="Detailed Project Scope: Tonnage, Material Grade, and Coating Requirements..." class="w-full h-40"></textarea>
-                <div class="bg-black p-4 rounded border border-zinc-800 flex gap-4">
-                    <input type="checkbox" id="popi" required class="w-6 h-6 accent-industrial-orange">
-                    <label for="popi" class="text-[10px] text-zinc-500 uppercase font-bold leading-tight">I authorize the use of this data for technical feasibility and quotation purposes under POPI Act regulations.</label>
-                </div>
+                <textarea id="wa_specs" placeholder="Detailed Project Scope..." class="w-full h-40"></textarea>
                 <button type="submit" class="w-full bg-industrial-orange py-5 font-black uppercase text-white tracking-[0.5em] hover:bg-white hover:text-black transition">Transmit Request</button>
             </form>
         </div>
@@ -235,10 +219,76 @@
 
     <a href="https://wa.me/27663544654?text=Professional%20Technical%20Consultation%20Requested" target="_blank" class="wa-float">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-2.277 0-4.131 1.841-4.131 4.102 0 1.259.576 2.38 1.48 3.125l-.26 1.439 1.48-.396c.451.272.973.431 1.43.431 2.277 0 4.132-1.841 4.132-4.101 0-2.262-1.855-4.101-4.131-4.101zm2.383 5.86c-.104.286-.606.549-.832.585-.226.036-.452.057-.866-.104-.413-.162-.686-.316-1.127-.591-.564-.352-.924-.772-1.123-1.126-.199-.354-.202-.638-.035-.851.168-.214.37-.251.492-.251.123 0 .204.004.263.007.065.003.149-.026.233.179.09.219.307.753.334.811.028.057.045.124.007.2-.038.075-.057.123-.113.189-.057.065-.123.146-.176.196-.06.057-.123.12-.054.239.069.12.308.508.66 0 .822.316.281.583.473.66.09.022.176.022.242-.015.066-.037.284-.33.361-.444.076-.113.153-.095.258-.057.106.038.673.316.788.373.116.057.194.084.221.132.028.048.028.279-.076.565zM12.011 0C5.384 0 0 5.37 0 11.975c0 2.112.547 4.162 1.588 5.957L.058 24l6.23-1.63c1.734.945 3.693 1.445 5.703 1.445 6.628 0 12.011-5.37 12.011-11.975S18.639 0 12.011 0zm0 21.844c-1.832 0-3.633-.493-5.203-1.425l-.372-.222-3.868 1.013 1.033-3.733-.243-.388c-.997-1.583-1.523-3.414-1.523-5.304 0-5.59 4.542-10.133 10.125-10.133s10.125 4.543 10.125 10.133-4.542 10.133-10.125 10.133z"/></svg>
-        <span class="wa-text">WhatsApp Consult</span>
+        <span class="wa-text">Contact Workshop</span>
     </a>
 
     <script>
+        // --- LOGO WELDING ANIMATION ---
+        const wCanvas = document.getElementById('weldCanvas');
+        const wCtx = wCanvas.getContext('2d');
+        let sparks = [];
+
+        class Spark {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 8;
+                this.speedY = (Math.random() - 0.8) * 10;
+                this.gravity = 0.2;
+                this.life = 1;
+                this.decay = Math.random() * 0.02 + 0.01;
+            }
+            update() {
+                this.speedY += this.gravity;
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.life -= this.decay;
+            }
+            draw() {
+                wCtx.fillStyle = `rgba(255, ${Math.floor(this.life * 160 + 50)}, 0, ${this.life})`;
+                wCtx.beginPath();
+                wCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                wCtx.fill();
+                // Arc Flash
+                wCtx.shadowBlur = 10;
+                wCtx.shadowColor = "white";
+            }
+        }
+
+        function animateWeld() {
+            wCtx.clearRect(0, 0, wCanvas.width, wCanvas.height);
+            
+            // Generate sparks at the "weld point" (between J and BAY)
+            if (Math.random() > 0.3) {
+                for(let i=0; i<3; i++) sparks.push(new Spark(85, 30));
+            }
+
+            // Draw Electrode
+            wCtx.strokeStyle = "#475569";
+            wCtx.lineWidth = 3;
+            wCtx.beginPath();
+            wCtx.moveTo(110, 0);
+            wCtx.lineTo(87, 28);
+            wCtx.stroke();
+
+            // Draw Arc Flash
+            wCtx.fillStyle = "rgba(255, 255, 255, 0.8)";
+            wCtx.beginPath();
+            wCtx.arc(85, 30, Math.random() * 5 + 2, 0, Math.PI * 2);
+            wCtx.fill();
+
+            sparks.forEach((s, i) => {
+                s.update();
+                s.draw();
+                if (s.life <= 0) sparks.splice(i, 1);
+            });
+            wCtx.shadowBlur = 0;
+            requestAnimationFrame(animateWeld);
+        }
+        animateWeld();
+
+        // --- UI FUNCTIONS ---
         function switchTab(id) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active-tab'));
@@ -250,16 +300,15 @@
         function sendWhatsApp() {
             const name = document.getElementById('wa_name').value;
             const type = document.getElementById('wa_type').value;
-            const msg = `*J-BAY WELDERS MANIFEST*%0A*Principal:* ${name}%0A*Scope:* ${type}`;
+            const msg = `*J-BAY WELDERS BRIEF*%0A*Client:* ${name}%0A*Scope:* ${type}`;
             window.open(`https://wa.me/27663544654?text=${msg}`, '_blank');
         }
 
-        // --- MASTER TETRIS ENGINE ---
+        // --- TETRIS ENGINE ---
         const canvas = document.getElementById('tetris');
         const context = canvas.getContext('2d');
         const nextCanvas = document.getElementById('next');
         const nCtx = nextCanvas.getContext('2d');
-        
         context.scale(20, 20);
         nCtx.scale(20, 20);
 
@@ -280,16 +329,6 @@
         let dropCounter = 0;
         let lastTime = 0;
 
-        function setDifficulty(speed, btn) {
-            dropInterval = speed;
-            document.querySelectorAll('.diff-btn').forEach(b => {
-                b.classList.remove('bg-industrial-orange', 'text-white');
-                b.classList.add('text-zinc-500');
-            });
-            btn.classList.add('bg-industrial-orange', 'text-white');
-            resetGame();
-        }
-
         function collide(arena, player) {
             const [m, o] = [player.matrix, player.pos];
             for (let y = 0; y < m.length; ++y) {
@@ -298,14 +337,6 @@
                 }
             }
             return false;
-        }
-
-        function merge(arena, player) {
-            player.matrix.forEach((row, y) => {
-                row.forEach((value, x) => {
-                    if (value !== 0) arena[y + player.pos.y][x + player.pos.x] = value;
-                });
-            });
         }
 
         function rotate(matrix) {
@@ -322,7 +353,6 @@
             player.next = PIECES[pieces[pieces.length * Math.random() | 0]];
             player.pos.y = 0;
             player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
-            
             if (collide(arena, player)) {
                 document.getElementById('game-over').classList.remove('hidden');
                 arena.forEach(row => row.fill(0));
@@ -334,7 +364,11 @@
             player.pos.y++;
             if (collide(arena, player)) {
                 player.pos.y--;
-                merge(arena, player);
+                player.matrix.forEach((row, y) => {
+                    row.forEach((value, x) => {
+                        if (value !== 0) arena[y + player.pos.y][x + player.pos.x] = value;
+                    });
+                });
                 playerReset();
                 arenaSweep();
             }
@@ -381,20 +415,6 @@
         function draw() {
             context.fillStyle = '#000';
             context.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Ghost Piece
-            const ghost = { pos: {x: player.pos.x, y: player.pos.y}, matrix: player.matrix };
-            while(!collide(arena, ghost)) { ghost.pos.y++; }
-            ghost.pos.y--;
-            ghost.matrix.forEach((row, y) => {
-                row.forEach((value, x) => {
-                    if (value !== 0) {
-                        context.fillStyle = 'rgba(255,255,255,0.05)';
-                        context.fillRect(x + ghost.pos.x, y + ghost.pos.y, 1, 1);
-                    }
-                });
-            });
-
             drawMatrix(arena, {x: 0, y: 0});
             drawMatrix(player.matrix, player.pos);
         }
@@ -419,16 +439,6 @@
             requestAnimationFrame(update);
         }
 
-        document.addEventListener('keydown', event => {
-            if ([37, 38, 39, 40].includes(event.keyCode)) {
-                event.preventDefault();
-                if (event.keyCode === 37) handleMove('left');
-                else if (event.keyCode === 39) handleMove('right');
-                else if (event.keyCode === 40) handleMove('down');
-                else if (event.keyCode === 38) handleMove('up');
-            }
-        });
-
         function resetGame() {
             document.getElementById('game-over').classList.add('hidden');
             arena.forEach(row => row.fill(0));
@@ -436,6 +446,16 @@
             playerReset();
             document.getElementById('score').innerText = '0';
         }
+
+        document.addEventListener('keydown', e => {
+            if ([37, 38, 39, 40].includes(e.keyCode)) {
+                e.preventDefault();
+                if (e.keyCode === 37) handleMove('left');
+                if (e.keyCode === 39) handleMove('right');
+                if (e.keyCode === 40) handleMove('down');
+                if (e.keyCode === 38) handleMove('up');
+            }
+        });
 
         playerReset();
         update();
