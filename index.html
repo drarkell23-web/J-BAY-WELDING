@@ -3,225 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J-Bay Welders | Industrial Engineering & Marine Fabrication Portal</title>
+    <title>J-Bay Welders | Industrial Engineering & Fabrication</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        /* --- SYSTEM ARCHITECTURE --- */
-        body { font-family: 'Outfit', sans-serif; scroll-behavior: smooth; overflow-x: hidden; }
+        /* --- CORE ARCHITECTURE --- */
+        body { font-family: 'Outfit', sans-serif; scroll-behavior: smooth; overflow-x: hidden; background-color: #f8fafc; }
         .tab-content { display: none; }
-        .tab-content.active { display: block; animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .tab-content.active { display: block; animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         
-        /* --- VISUAL EFFECTS --- */
+        /* --- VISUALS & LAYERS --- */
         .hero-gradient { 
-            background: linear-gradient(90deg, #0f172a 40%, rgba(15, 23, 42, 0.4) 100%), 
-            url('https://images.unsplash.com/photo-1531986346696-4bbdb408ad33?q=80&w=1920&auto=format&fit=crop'); 
+            background: linear-gradient(90deg, #0f172a 45%, rgba(15, 23, 42, 0.3) 100%), 
+            url('https://maps.app.goo.gl/8nmf9ZHkB5B59Bya9'); 
             background-size: cover; background-position: center;
         }
-        .glass { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(15px); }
-        .orange-glow:hover { box-shadow: 0 0 30px rgba(234, 88, 12, 0.6); }
+        .glass-nav { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px); border-bottom: 1px solid #e2e8f0; }
+        .orange-glow:hover { box-shadow: 0 0 40px rgba(234, 88, 12, 0.6); }
         
-        /* --- WELDING STICK LOGO ANIMATION --- */
-        @keyframes spark {
-            0%, 100% { opacity: 0; transform: scale(0.5) translate(0, 0); }
-            50% { opacity: 1; transform: scale(1.4) translate(3px, -3px); }
+        /* --- ANIMATED WELDING STICK LOGO --- */
+        @keyframes arc-spark {
+            0%, 100% { opacity: 0; transform: scale(0.4) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.5) rotate(15deg); }
         }
-        .arc-spark { animation: spark 0.15s infinite; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .spark-flash { animation: arc-spark 0.08s infinite linear; }
         
-        .img-container { position: relative; overflow: hidden; background-color: #1e293b; }
-        .image-zoom { transition: transform 0.8s ease; width: 100%; height: 100%; object-fit: cover; }
-        .image-zoom:hover { transform: scale(1.1); }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .image-frame { position: relative; overflow: hidden; background-color: #0f172a; border-radius: 4px; }
+        .image-frame img { transition: all 0.7s ease; width: 100%; height: 100%; object-fit: cover; }
+        .image-frame:hover img { transform: scale(1.1); filter: brightness(1.2); }
+
+        /* --- BOT STYLING --- */
+        #assistant-panel { display: none; transition: all 0.3s ease; }
+        #assistant-panel.active { display: flex; animation: slideUp 0.3s ease; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900">
+<body class="text-slate-900">
 
-    <div class="bg-orange-600 text-white text-[10px] font-black uppercase tracking-[0.3em] py-2 text-center px-4">
-        Direct Manager Lead: +27 66 354 4654 | Industrial Area, Jeffreys Bay
+    <div class="bg-slate-900 text-white text-[9px] font-black uppercase tracking-[0.4em] py-2.5 text-center px-4">
+        Engineering Excellence | Kouga Region | Direct: +27 66 354 4654
     </div>
 
-    <nav class="glass border-b sticky top-0 z-[1000] px-6 lg:px-12 py-3 flex justify-between items-center shadow-lg">
+    <nav class="glass-nav sticky top-0 z-[1000] px-6 lg:px-16 py-4 flex justify-between items-center shadow-sm">
         <div class="flex items-center gap-4">
-            <div class="flex items-center gap-3">
-                <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="20" y="75" width="12" height="20" rx="2" fill="#0f172a"/> <rect x="24" y="25" width="4" height="50" fill="#64748b"/> <rect x="24" y="20" width="4" height="6" fill="#f97316"/> <g class="arc-spark">
-                        <circle cx="26" cy="20" r="6" fill="#fbbf24"/>
-                        <path d="M26 20L10 5M26 20L40 5M26 20L45 20" stroke="#ffffff" stroke-width="2"/>
+            <div class="relative group cursor-pointer">
+                <svg width="55" height="55" viewBox="0 0 100 100">
+                    <rect x="25" y="70" width="12" height="25" rx="2" fill="#1e293b"/> <rect x="29" y="15" width="4" height="55" fill="#cbd5e1"/> <rect x="29" y="10" width="4" height="6" fill="#f97316"/> <g class="spark-flash">
+                        <path d="M31 10 L10 0 M31 10 L50 0 M31 10 L60 15" stroke="#fbbf24" stroke-width="2"/>
+                        <circle cx="31" cy="10" r="5" fill="#fff"/>
                     </g>
                 </svg>
-                <div class="text-2xl font-black tracking-tighter uppercase leading-none">
+                <div class="absolute -right-36 top-1 text-2xl font-black tracking-tighter uppercase leading-none">
                     J-BAY <br><span class="text-orange-600">WELDERS</span>
                 </div>
             </div>
         </div>
 
-        <div class="hidden lg:flex gap-8 font-bold text-xs uppercase tracking-widest items-center">
-            <button onclick="switchTab('home')" class="nav-link text-orange-600 transition" id="nav-home">Home</button>
-            <button onclick="switchTab('services')" class="nav-link hover:text-orange-600 transition" id="nav-services">Services</button>
-            <button onclick="switchTab('gallery')" class="nav-link hover:text-orange-600 transition" id="nav-gallery">Project Gallery</button>
-            <button onclick="switchTab('technical')" class="nav-link hover:text-orange-600 transition" id="nav-technical">Specs</button>
-            <a href="#quote-section" class="bg-slate-900 text-white px-6 py-3 rounded-sm hover:bg-orange-600 transition-all orange-glow shadow-md">Request Quote</a>
+        <div class="hidden lg:flex gap-10 font-bold text-[11px] uppercase tracking-[0.2em] items-center">
+            <button onclick="switchTab('home')" class="nav-btn text-orange-600 border-b-2 border-orange-600 pb-1" id="btn-home">Home</button>
+            <button onclick="switchTab('services')" class="nav-btn hover:text-orange-600 transition" id="btn-services">Services</button>
+            <button onclick="switchTab('gallery')" class="nav-btn hover:text-orange-600 transition" id="btn-gallery">Project Gallery</button>
+            <button onclick="switchTab('tech')" class="nav-btn hover:text-orange-600 transition" id="btn-tech">Specs</button>
+            <a href="#quote-section" class="bg-orange-600 text-white px-8 py-3 rounded-sm hover:bg-slate-900 transition-all orange-glow">Get Quote</a>
         </div>
     </nav>
 
     <main id="home" class="tab-content active">
-        <section class="hero-gradient h-[90vh] flex items-center px-6 lg:px-24">
+        <section class="hero-gradient h-[88vh] flex items-center px-6 lg:px-24">
             <div class="max-w-4xl">
-                <span class="text-orange-500 font-black tracking-[0.5em] uppercase text-xs mb-4 block underline decoration-2">Premium Fabrication</span>
-                <h1 class="text-6xl lg:text-9xl font-black text-white leading-none uppercase mb-6 italic">Solid <br><span class="text-orange-600">Steelwork.</span></h1>
+                <p class="text-orange-500 font-black tracking-[0.6em] uppercase text-xs mb-6">Certified Industrial Fabrication</p>
+                <h1 class="text-7xl lg:text-[10rem] font-black text-white leading-[0.85] uppercase mb-8 italic tracking-tighter">
+                    Heavy <br><span class="text-orange-600">Metal.</span>
+                </h1>
                 
-                <div class="bg-slate-900/90 backdrop-blur-md p-8 border-l-8 border-orange-600 max-w-2xl mb-10 shadow-2xl">
-                    <p class="text-lg text-slate-100 font-light leading-relaxed">
-                        We offer professional welding and steel fabrication services in Jeffreys Bay (J-Bay) and surrounding areas. 
-                        Our work includes property security gates, burglar bars, trailers, vehicle welding, and general steel fabrication.
+                <div class="bg-slate-900/80 backdrop-blur-lg p-10 border-l-[12px] border-orange-600 max-w-2xl mb-12 shadow-2xl">
+                    <p class="text-xl text-slate-100 font-light leading-relaxed">
+                        Professional welding and steel fabrication in Jeffreys Bay. We specialize in property security gates, burglar bars, 
+                        trailers, vehicle welding, and marine-grade stainless steel finishes.
                     </p>
                 </div>
 
-                <div class="flex flex-wrap gap-4">
-                    <button onclick="switchTab('services')" class="bg-orange-600 text-white px-12 py-5 font-black text-lg hover:bg-white hover:text-orange-600 transition-all">OUR CAPABILITIES</button>
-                    <a href="https://wa.me/27663544654" class="bg-white text-slate-900 px-12 py-5 font-black text-lg hover:bg-slate-200 transition-all">DIRECT WHATSAPP</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-24 bg-white px-6 lg:px-24">
-            <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-                <div class="img-container h-[500px] shadow-2xl">
-                    <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=1000" class="image-zoom" alt="Welding Professionally">
-                </div>
-                <div>
-                    <h2 class="text-4xl font-black uppercase mb-6 italic">Reliable <span class="text-orange-600 text-5xl">Service</span></h2>
-                    <p class="text-xl text-slate-600 leading-relaxed mb-8">
-                        We also specialise in stainless steel polishing, delivering clean finishes that last. Whether you need custom-built steelwork, 
-                        repairs, reinforcements, or on-site welding, we focus on solid workmanship, durability, and getting the job done right the first time.
-                    </p>
-                    <div class="flex gap-4 mb-8">
-                        <div class="border-2 border-slate-900 p-4 text-center w-full">
-                            <p class="text-[10px] font-black uppercase text-slate-400">Industry Tag</p>
-                            <p class="font-bold uppercase tracking-tighter">Steel Fabrication</p>
-                        </div>
-                        <div class="border-2 border-slate-900 p-4 text-center w-full">
-                            <p class="text-[10px] font-black uppercase text-slate-400">Industry Tag</p>
-                            <p class="font-bold uppercase tracking-tighter">Welding</p>
-                        </div>
-                    </div>
+                <div class="flex flex-wrap gap-6">
+                    <button onclick="switchTab('services')" class="bg-orange-600 text-white px-14 py-6 font-black text-lg hover:bg-white hover:text-orange-600 transition-all shadow-2xl uppercase tracking-widest">Our Work</button>
+                    <a href="https://wa.me/27663544654" class="bg-white text-slate-900 px-14 py-6 font-black text-lg hover:bg-slate-200 transition-all shadow-2xl uppercase tracking-widest">WhatsApp</a>
                 </div>
             </div>
         </section>
     </main>
 
-    <main id="services" class="tab-content py-24 px-6 lg:px-24 bg-slate-50">
-        <h2 class="text-center text-6xl font-black uppercase italic mb-20 leading-none">Our Industrial <br><span class="text-orange-600">Solutions</span></h2>
-        <div class="grid lg:grid-cols-3 gap-10">
-            <div class="bg-white border-t-8 border-orange-600 shadow-xl overflow-hidden">
-                <div class="h-64 img-container"><img src="https://images.unsplash.com/photo-1531986346696-4bbdb408ad33?q=80&w=600" class="image-zoom"></div>
-                <div class="p-8">
-                    <h3 class="text-2xl font-black uppercase mb-2">Marine Grade</h3>
-                    <p class="text-sm text-slate-500 mb-6 font-bold uppercase tracking-widest">316L Stainless Steel</p>
-                    <p class="text-slate-600 text-sm">Custom boat railings, anchor rollers, and marine-grade fabrication for the J-Bay coastline.</p>
-                </div>
+    <main id="services" class="tab-content py-28 px-6 lg:px-24">
+        <div class="text-center mb-20">
+            <h2 class="text-6xl font-black uppercase italic italic">Workmanship <span class="text-orange-600">Expertise</span></h2>
+            <div class="w-32 h-2 bg-orange-600 mx-auto mt-4"></div>
+        </div>
+        
+        <div class="grid lg:grid-cols-3 gap-12">
+            <div class="group border-b-4 border-slate-900 bg-white p-10 shadow-xl hover:bg-slate-900 hover:text-white transition-all duration-500">
+                <h3 class="text-3xl font-black uppercase mb-4 text-orange-600 italic">Security</h3>
+                <p class="text-lg leading-relaxed opacity-80">Custom property security gates and burglar bars built for extreme durability and coastal protection.</p>
             </div>
-            <div class="bg-white border-t-8 border-slate-900 shadow-xl overflow-hidden">
-                <div class="h-64 img-container"><img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=600" class="image-zoom"></div>
-                <div class="p-8">
-                    <h3 class="text-2xl font-black uppercase mb-2">Security Gates</h3>
-                    <p class="text-sm text-slate-500 mb-6 font-bold uppercase tracking-widest">Heavy Duty Iron</p>
-                    <p class="text-slate-600 text-sm">Residential and commercial security gates, automated systems, and high-strength burglar bars.</p>
-                </div>
+            <div class="group border-b-4 border-orange-600 bg-white p-10 shadow-xl hover:bg-orange-600 hover:text-white transition-all duration-500">
+                <h3 class="text-3xl font-black uppercase mb-4 italic">Marine</h3>
+                <p class="text-lg leading-relaxed opacity-80">316L Stainless steel fabrication and mirror polishing. We handle salt-air environments with ease.</p>
             </div>
-            <div class="bg-white border-t-8 border-orange-600 shadow-xl overflow-hidden">
-                <div class="h-64 img-container"><img src="https://images.unsplash.com/photo-1535141104552-61054a01084a?q=80&w=600" class="image-zoom"></div>
-                <div class="p-8">
-                    <h3 class="text-2xl font-black uppercase mb-2">Trailer Work</h3>
-                    <p class="text-sm text-slate-500 mb-6 font-bold uppercase tracking-widest">Vehicle Fabrication</p>
-                    <p class="text-slate-600 text-sm">Chassis reinforcement, custom trailers, and aluminum canopy welding for 4x4 enthusiasts.</p>
-                </div>
+            <div class="group border-b-4 border-slate-900 bg-white p-10 shadow-xl hover:bg-slate-900 hover:text-white transition-all duration-500">
+                <h3 class="text-3xl font-black uppercase mb-4 text-orange-600 italic">Structural</h3>
+                <p class="text-lg leading-relaxed opacity-80">Trailer reinforcements, vehicle mods, and general steel fabrication for residential and industrial sites.</p>
             </div>
         </div>
     </main>
 
-    <main id="gallery" class="tab-content py-24 px-6 lg:px-24 bg-white">
-        <h2 class="text-5xl font-black uppercase italic mb-16 text-center">Project <span class="text-orange-600">Gallery</span></h2>
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="h-80 img-container rounded shadow-lg"><img src="https://images.unsplash.com/photo-1516937941344-00b4e0337589?q=80&w=800" class="image-zoom"></div>
-            <div class="h-80 img-container rounded shadow-lg"><img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=800" class="image-zoom"></div>
-            <div class="h-80 img-container rounded shadow-lg"><img src="https://images.unsplash.com/photo-1589939705384-5185138a04b9?q=80&w=800" class="image-zoom"></div>
-            <div class="h-80 img-container rounded shadow-lg"><img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800" class="image-zoom"></div>
+    <main id="gallery" class="tab-content py-28 px-6 lg:px-24 bg-slate-900">
+        <h2 class="text-center text-6xl font-black uppercase mb-20 italic text-white">Live <span class="text-orange-600">Portfolio</span></h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="h-96 image-frame shadow-2xl"><img src="https://maps.app.goo.gl/avuxDuY1gm9pey8k6" alt="J-Bay Welder Project 1"></div>
+            <div class="h-96 image-frame shadow-2xl"><img src="https://maps.app.goo.gl/A9uF715eZsZDCowE6" alt="J-Bay Welder Project 2"></div>
+            <div class="h-96 image-frame shadow-2xl"><img src="https://maps.app.goo.gl/t9Zjfm1UniHwHXHG7" alt="J-Bay Welder Project 3"></div>
+            <div class="h-96 image-frame shadow-2xl"><img src="https://maps.app.goo.gl/v86M8gNnycWFGGNQ7" alt="J-Bay Welder Project 4"></div>
+            <div class="h-96 image-frame shadow-2xl"><img src="https://maps.app.goo.gl/a16wwNC8cUtCK3xv6" alt="J-Bay Welder Project 5"></div>
+            <div class="h-96 image-frame shadow-2xl"><img src="https://maps.app.goo.gl/D2UUqKRRhVvcbwQo7" alt="J-Bay Welder Project 6"></div>
         </div>
     </main>
 
-    <main id="technical" class="tab-content py-24 px-6 lg:px-24">
-        <h2 class="text-4xl font-black uppercase italic mb-12">Technical <span class="text-orange-600">Standards</span></h2>
-        <div class="overflow-x-auto shadow-2xl rounded">
-            <table class="w-full text-left bg-white">
-                <thead class="bg-slate-900 text-white uppercase text-xs tracking-widest">
-                    <tr><th class="p-6">Process</th><th class="p-6">Material</th><th class="p-6">Application</th></tr>
+    <main id="tech" class="tab-content py-28 px-6 lg:px-24 bg-white">
+        <h2 class="text-5xl font-black uppercase italic mb-12">Quality <span class="text-orange-600">Specs</span></h2>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead class="bg-slate-900 text-white uppercase text-xs">
+                    <tr><th class="p-8">Category</th><th class="p-8">Standard</th><th class="p-8">Durability</th></tr>
                 </thead>
-                <tbody class="text-sm border-b">
-                    <tr><td class="p-6 font-black">TIG WELDING</td><td class="p-6">Stainless Steel / Aluminum</td><td class="p-6 italic">High Precision Marine Work</td></tr>
-                    <tr class="bg-slate-50"><td class="p-6 font-black">MIG WELDING</td><td class="p-6">Carbon Steel</td><td class="p-6 italic">Heavy Structural Beams</td></tr>
-                    <tr><td class="p-6 font-black">POLISHING</td><td class="p-6">316L Stainless</td><td class="p-6 italic">Mirror Finish Restoration</td></tr>
+                <tbody class="text-xl font-bold uppercase tracking-tighter">
+                    <tr class="border-b"><td class="p-8">Stainless Steel</td><td class="p-8">AISI 316 Marine</td><td class="p-8 text-orange-600">Ultimate</td></tr>
+                    <tr class="border-b"><td class="p-8">Structural Iron</td><td class="p-8">S355 Heavy Duty</td><td class="p-8 text-orange-600">High</td></tr>
+                    <tr class="border-b"><td class="p-8">Welding Process</td><td class="p-8">TIG / MIG / ARC</td><td class="p-8 text-orange-600">Certified</td></tr>
                 </tbody>
             </table>
         </div>
     </main>
 
-    <section id="quote-section" class="py-24 bg-slate-900 text-white px-6">
-        <div class="max-w-5xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
+    <section id="quote-section" class="py-32 bg-slate-100 px-6">
+        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-24 items-center">
             <div>
-                <h2 class="text-6xl font-black uppercase italic mb-6">Let's <span class="text-orange-600 text-7xl">Build.</span></h2>
-                <p class="text-slate-400 text-xl leading-relaxed mb-8">Our workshop manager will review your project brief and contact you within 2 hours.</p>
-                <div class="space-y-4">
-                    <div class="flex items-center gap-4 text-orange-600 font-black"><span class="text-2xl">📞</span> +27 66 354 4654</div>
-                    <div class="flex items-center gap-4 text-slate-300 font-black italic"><span class="text-2xl">📍</span> Industrial Area, Jeffreys Bay</div>
+                <h2 class="text-7xl font-black uppercase italic mb-8 leading-none italic">Get A <br><span class="text-orange-600 text-8xl">Quote.</span></h2>
+                <p class="text-2xl text-slate-500 font-light mb-10">We prioritize quality over everything. Send us your requirements for an immediate technical review.</p>
+                <div class="p-6 bg-white border-l-8 border-orange-600 shadow-lg">
+                    <p class="font-black uppercase tracking-widest text-sm">Workshop Manager</p>
+                    <p class="text-2xl font-bold">+27 66 354 4654</p>
                 </div>
             </div>
             
-            <form id="masterForm" class="bg-white p-8 lg:p-12 text-slate-900 space-y-6 shadow-2xl">
-                <input type="text" id="clientName" placeholder="Full Name" required class="w-full p-4 border bg-slate-50 focus:border-orange-600 outline-none">
-                <input type="text" id="clientArea" placeholder="Area (e.g. Wavecrest)" required class="w-full p-4 border bg-slate-50 focus:border-orange-600 outline-none">
-                <select id="projectCategory" class="w-full p-4 border bg-slate-50 font-bold outline-none">
-                    <option>Property Security Gates</option>
-                    <option>Marine Stainless Steel</option>
-                    <option>Vehicle & Trailer Fabrication</option>
-                    <option>General Steelwork</option>
-                </select>
-                <textarea id="projectDetails" placeholder="Project Dimensions / Material / Urgency..." required class="w-full p-4 border bg-slate-50 h-32 outline-none focus:border-orange-600"></textarea>
-                <button type="submit" class="w-full bg-orange-600 text-white py-6 font-black uppercase tracking-[0.3em] hover:bg-slate-900 transition-all orange-glow shadow-xl">
-                    SUBMIT TO MANAGER
-                </button>
+            <form id="masterForm" class="bg-white p-12 shadow-2xl space-y-6">
+                <input type="text" id="name" placeholder="Full Name" required class="w-full p-5 border bg-slate-50 focus:border-orange-600 outline-none font-bold">
+                <input type="text" id="area" placeholder="Location (J-Bay / Humansdorp etc)" required class="w-full p-5 border bg-slate-50 focus:border-orange-600 outline-none font-bold">
+                <textarea id="msg" placeholder="Tell us about the project dimensions and materials..." required class="w-full p-5 border bg-slate-50 h-40 outline-none"></textarea>
+                <button type="submit" class="w-full bg-slate-900 text-white py-6 font-black uppercase tracking-[0.4em] hover:bg-orange-600 transition-all shadow-xl">Send Brief</button>
             </form>
         </div>
     </section>
 
-    <footer class="bg-white py-12 px-6 border-t">
-        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-8">
-            <p class="font-black text-xl italic uppercase">J-BAY <span class="text-orange-600">WELDERS</span></p>
-            <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">© 2026 J-Bay Welders Engineering | All Leads Sent To 066 354 4654</p>
+    <footer class="bg-white py-16 px-6 border-t">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-10">
+            <div class="text-center lg:text-left">
+                <p class="font-black text-3xl italic uppercase leading-none">J-BAY <span class="text-orange-600">WELDERS</span></p>
+                <p class="text-xs font-bold text-slate-400 mt-2 uppercase tracking-widest">Est. Engineering Jeffreys Bay</p>
+            </div>
+            <div class="text-[11px] font-black uppercase tracking-[0.3em] text-slate-500 space-y-2 text-center lg:text-right">
+                <p>© 2026 Professional Fabrication</p>
+                <p>Industrial Area, Kouga, South Africa</p>
+            </div>
         </div>
     </footer>
 
+    <div class="fixed bottom-8 right-8 z-[3000]">
+        <button onclick="toggleBot()" class="bg-orange-600 text-white w-20 h-20 rounded-full shadow-2xl flex items-center justify-center text-3xl hover:rotate-12 transition-all active:scale-95">
+            ⚡
+        </button>
+        <div id="assistant-panel" class="absolute bottom-24 right-0 w-80 bg-white shadow-2xl rounded-xl border flex-col overflow-hidden">
+            <div class="bg-slate-900 p-5 text-white font-black uppercase text-xs flex justify-between items-center">
+                <span>Fabrication Assistant</span>
+                <button onclick="toggleBot()" class="opacity-50">CLOSE</button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="bg-slate-100 p-4 rounded text-sm font-medium">Hello! I can help you with quick quotes or emergency repair bookings.</div>
+                <button onclick="chatGo('Emergency Repair')" class="w-full text-left p-3 border font-black uppercase text-[10px] hover:bg-orange-600 hover:text-white transition">Emergency Repair</button>
+                <button onclick="chatGo('Stainless Polishing')" class="w-full text-left p-3 border font-black uppercase text-[10px] hover:bg-orange-600 hover:text-white transition">Stainless Polishing</button>
+                <button onclick="chatGo('General Gate Quote')" class="w-full text-left p-3 border font-black uppercase text-[10px] hover:bg-orange-600 hover:text-white transition">General Gate Quote</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // --- NAVIGATION LOGIC ---
+        // TAB LOGIC
         function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('text-orange-600'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('text-orange-600', 'border-b-2', 'border-orange-600'));
+            
             document.getElementById(tabId).classList.add('active');
-            document.getElementById('nav-' + tabId).classList.add('text-orange-600');
+            document.getElementById('btn-' + tabId).classList.add('text-orange-600', 'border-b-2', 'border-orange-600');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- WHATSAPP FORM LOGIC ---
+        // CHAT LOGIC
+        function toggleBot() {
+            document.getElementById('assistant-panel').classList.toggle('active');
+        }
+        function chatGo(topic) {
+            const num = "27663544654";
+            window.open(`https://wa.me/${num}?text=Hi J-Bay Welders, I need help with: ${topic}`, '_blank');
+        }
+
+        // FORM LOGIC
         document.getElementById('masterForm').onsubmit = function(e) {
             e.preventDefault();
-            const phone = "27663544654";
-            const message = `*NEW PROJECT BRIEF - J-BAY WELDERS*%0A` +
-                            `----------------------------------%0A` +
-                            `*CLIENT:* ${document.getElementById('clientName').value}%0A` +
-                            `*AREA:* ${document.getElementById('clientArea').value}%0A` +
-                            `*SERVICE:* ${document.getElementById('projectCategory').value}%0A` +
-                            `*DETAILS:* ${document.getElementById('projectDetails').value}`;
-            window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+            const num = "27663544654";
+            const text = `*PORTAL INQUIRY*%0A*Name:* ${document.getElementById('name').value}%0A*Area:* ${document.getElementById('area').value}%0A*Message:* ${document.getElementById('msg').value}`;
+            window.open(`https://wa.me/${num}?text=${text}`, '_blank');
         };
     </script>
 </body>
