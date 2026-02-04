@@ -3,69 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J-Bay Welders | Industrial Precision</title>
+    <title>J-Bay Welders | Industrial Precision Engineering</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Outfit', sans-serif; scroll-behavior: smooth; overflow-x: hidden; background-color: #020617; margin: 0; color: white; }
+        body { font-family: 'Outfit', sans-serif; scroll-behavior: smooth; overflow-x: hidden; background-color: #020617; margin: 0; color: #f8fafc; }
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         
+        /* --- BRAND COLORS --- */
+        .bg-industrial-orange { background-color: #ea580c; }
+        .text-industrial-orange { color: #ea580c; }
+        .border-industrial-orange { border-color: #ea580c; }
+
         .hero-gradient { 
             background: linear-gradient(90deg, #020617 50%, rgba(15, 23, 42, 0.4) 100%), 
             url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=1920'); 
             background-size: cover; background-position: center;
         }
 
+        /* --- LOGO ANIMATION --- */
+        @keyframes spark-flicker {
+            0%, 100% { opacity: 1; transform: scale(1); filter: brightness(1.5); }
+            50% { opacity: 0.7; transform: scale(1.2); filter: brightness(2); }
+        }
+        .welding-spark { animation: spark-flicker 0.1s infinite; fill: #60a5fa; }
+
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        .nav-btn { font-size: 11px; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; transition: all 0.3s; color: #94a3b8; border-bottom: 2px solid transparent; }
-        .active-tab { color: #f97316 !important; border-bottom: 2px solid #f97316; }
+        .nav-btn { font-size: 11px; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; transition: all 0.3s; color: #94a3b8; }
+        .active-tab { color: #ea580c !important; position: relative; }
+        .active-tab::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 2px; background: #ea580c; }
         
-        /* --- PRO ARCADE STYLING --- */
+        /* --- CHATBOT STYLE --- */
+        #chatbot-bubble {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 60px; height: 60px; background: #ea580c;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 25px rgba(234, 88, 12, 0.4); cursor: pointer; z-index: 2000;
+            transition: transform 0.3s;
+        }
+        #chatbot-bubble:hover { transform: scale(1.1); }
+
+        /* --- GAME UI --- */
         #game-wrapper {
-            display: flex;
-            gap: 20px;
-            background: #0f172a;
-            padding: 20px;
-            border: 4px solid #1e293b;
-            border-radius: 8px;
-            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+            display: flex; gap: 20px; background: #0f172a; padding: 25px;
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
-        canvas { 
-            background: #000; 
-            border: 2px solid #334155;
-            display: block;
-        }
-        .stats-box {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-width: 120px;
-        }
+        canvas { background: #000; border: 1px solid #1e293b; }
     </style>
 </head>
 <body>
 
-    <nav class="sticky top-0 z-[1000] px-6 lg:px-16 py-5 flex justify-between items-center bg-slate-950 border-b border-white/5">
+    <nav class="sticky top-0 z-[1000] px-6 lg:px-16 py-4 flex justify-between items-center bg-slate-950/90 backdrop-blur-xl border-b border-white/5">
         <div class="flex items-center gap-4">
-            <div class="text-xl font-black tracking-tighter uppercase leading-tight italic">J-BAY <br><span class="text-orange-600">WELDERS</span></div>
+            <svg width="60" height="60" viewBox="0 0 100 100">
+                <rect x="20" y="70" width="60" height="10" fill="#475569" />
+                <g transform="rotate(-45 50 50)">
+                    <rect x="48" y="10" width="4" height="60" fill="#94a3b8" />
+                    <rect x="46" y="70" width="8" height="5" fill="#ea580c" />
+                    <circle cx="50" cy="75" r="6" class="welding-spark" />
+                </g>
+            </svg>
+            <div class="text-xl font-black tracking-tighter uppercase leading-tight italic">J-BAY <br><span class="text-industrial-orange">WELDERS</span></div>
         </div>
-        <div class="hidden lg:flex gap-8 items-center">
-            <button onclick="switchTab('home')" class="nav-btn active-tab" id="btn-home">Home</button>
+        <div class="hidden lg:flex gap-10 items-center">
+            <button onclick="switchTab('home')" class="nav-btn active-tab" id="btn-home">Portal</button>
             <button onclick="switchTab('knowledge')" class="nav-btn" id="btn-knowledge">Knowledge</button>
-            <button onclick="switchTab('whatsapp')" class="nav-btn" id="btn-whatsapp">Project Brief</button>
-            <button onclick="switchTab('arcade')" class="nav-btn" id="btn-arcade">Play Arcade</button>
+            <button onclick="switchTab('whatsapp')" class="nav-btn" id="btn-whatsapp">Briefing</button>
+            <button onclick="switchTab('arcade')" class="nav-btn" id="btn-arcade">Arcade</button>
         </div>
     </nav>
+
+    <div id="chatbot-bubble" onclick="window.open('https://wa.me/27663544654', '_blank')">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    </div>
 
     <main id="home" class="tab-content active">
         <section class="hero-gradient min-h-[90vh] flex items-center px-6 lg:px-24">
             <div class="max-w-4xl">
-                <p class="text-orange-500 font-black tracking-[0.8em] uppercase text-xs mb-6">Tier-1 Structural Engineering</p>
-                <h1 class="text-6xl lg:text-[9rem] font-black leading-[0.85] uppercase mb-12 italic text-white">Steel <br><span class="text-orange-600">Force.</span></h1>
-                <div class="bg-slate-900/80 p-8 border-l-8 border-orange-600 max-w-2xl">
-                    <p class="text-xl font-light leading-relaxed">Jeffreys Bay's elite steel fabrication house. We deliver heavy-duty structural frames, marine stainless, and security solutions with millimetre precision.</p>
+                <p class="text-industrial-orange font-black tracking-[0.8em] uppercase text-xs mb-6">Heavy Duty Fabrication</p>
+                <h1 class="text-6xl lg:text-[9rem] font-black leading-[0.85] uppercase mb-12 italic text-white">Forge <br><span class="text-industrial-orange">Elite.</span></h1>
+                <div class="glass-panel bg-slate-900/60 backdrop-blur-sm p-8 border-l-8 border-industrial-orange max-w-2xl">
+                    <p class="text-xl font-light leading-relaxed text-slate-200 italic">"Delivering high-tensile structural engineering and marine-grade precision to the Jeffreys Bay coastline."</p>
                 </div>
             </div>
         </section>
@@ -73,70 +94,52 @@
 
     <main id="knowledge" class="tab-content py-24 px-6 lg:px-24">
         <div class="max-w-6xl mx-auto">
-            <h2 class="text-5xl font-black uppercase italic mb-12">Steel <span class="text-orange-600">Intelligence</span></h2>
-            <div class="grid lg:grid-cols-2 gap-12">
+            <h2 class="text-5xl font-black uppercase italic mb-12">Engineering <span class="text-industrial-orange">Insight</span></h2>
+            
+            <div class="grid lg:grid-cols-2 gap-12 mt-12">
                 <div class="space-y-6">
-                    <div class="p-6 bg-slate-900 border-l-4 border-orange-600">
-                        <h3 class="font-bold text-orange-500 uppercase mb-2">316 vs 304 Stainless</h3>
-                        <p class="text-sm text-slate-300 italic">In coastal J-Bay, 316-grade is mandatory. It contains Molybdenum which resists the "tea-staining" caused by salt spray.</p>
+                    <div class="p-8 bg-slate-900 border border-white/5 rounded-xl hover:border-industrial-orange transition">
+                        <h3 class="font-bold text-industrial-orange uppercase mb-2">Corrosion Resistance</h3>
+                        <p class="text-sm text-slate-400">J-Bay's humidity requires Grade 316 Stainless. We specialize in passivated finishes that withstand extreme salt-air exposure.</p>
                     </div>
-                    <div class="p-6 bg-slate-900 border-l-4 border-slate-600">
-                        <h3 class="font-bold text-white uppercase mb-2">Cold-Formed Sections</h3>
-                        <p class="text-sm text-slate-300">Lightweight yet extremely strong. Ideal for roof trusses and solar mounting structures.</p>
-                    </div>
-                </div>
-                <div class="p-8 bg-white/5 rounded border border-white/10 flex flex-col justify-center">
-                    <p class="text-slate-400 text-sm italic leading-relaxed">"Engineering is not just about making things stay up; it's about making them last in the harshest environments on earth."</p>
                 </div>
             </div>
-            
         </div>
     </main>
 
     <main id="whatsapp" class="tab-content py-24 px-6 lg:px-24">
-        <div class="max-w-3xl mx-auto bg-slate-900 p-10 border-t-8 border-orange-600 rounded-b-xl">
-            <h2 class="text-3xl font-black uppercase italic mb-8">Start Your <span class="text-orange-600">Project</span></h2>
+        <div class="max-w-3xl mx-auto bg-slate-900 p-12 border-b-4 border-industrial-orange rounded-xl shadow-2xl">
+            <h2 class="text-3xl font-black uppercase italic mb-8">Launch <span class="text-industrial-orange">Project</span></h2>
             <div class="space-y-6">
-                <input type="text" id="wa_type" placeholder="PROJECT TYPE (e.g. Balustrades, Gates, Roof)" class="w-full bg-slate-800 p-4 font-bold outline-none border border-white/10 focus:border-orange-600">
-                <input type="text" id="wa_dims" placeholder="APPROXIMATE SIZE" class="w-full bg-slate-800 p-4 font-bold outline-none border border-white/10">
-                <textarea id="wa_specs" placeholder="SPECIAL INSTRUCTIONS" class="w-full bg-slate-800 p-4 font-bold outline-none border border-white/10 h-32"></textarea>
-                <button onclick="sendWhatsApp()" class="w-full bg-orange-600 py-6 font-black uppercase tracking-widest hover:bg-green-600 transition">Send To Workshop</button>
+                <input type="text" id="wa_type" placeholder="PROJECT TYPE" class="w-full bg-slate-950 p-5 font-bold outline-none border border-white/10 focus:border-industrial-orange text-white">
+                <input type="text" id="wa_dims" placeholder="DIMENSIONS" class="w-full bg-slate-950 p-5 font-bold outline-none border border-white/10 text-white">
+                <textarea id="wa_specs" placeholder="NOTES" class="w-full bg-slate-950 p-5 font-bold outline-none border border-white/10 h-32 text-white"></textarea>
+                <button onclick="sendWhatsApp()" class="w-full bg-industrial-orange py-6 font-black uppercase tracking-widest text-white shadow-xl">Contact Engineering</button>
             </div>
         </div>
     </main>
 
     <main id="arcade" class="tab-content py-24 px-6 lg:px-24 bg-slate-950 min-h-screen">
         <div class="flex flex-col items-center">
-            <h2 class="text-6xl font-black uppercase italic mb-10 text-white">Steel <span class="text-orange-600">Stacker</span></h2>
-            
+            <h2 class="text-6xl font-black uppercase italic mb-10 text-white">Steel <span class="text-industrial-orange">Stacker</span></h2>
             <div id="game-wrapper">
                 <canvas id="tetris" width="240" height="400"></canvas>
-                
-                <div class="stats-box">
+                <div class="flex flex-col justify-between min-w-[140px]">
                     <div>
-                        <p class="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2">Next Piece</p>
+                        <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-4">Preview</p>
                         <canvas id="next" width="100" height="100"></canvas>
                     </div>
-                    
-                    <div class="mt-10">
-                        <p class="text-[10px] font-black uppercase tracking-widest text-slate-500">Score</p>
-                        <p id="score" class="text-4xl font-black text-orange-500 italic">0</p>
+                    <div>
+                        <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Mass Score</p>
+                        <p id="score" class="text-5xl font-black text-industrial-orange italic">0</p>
                     </div>
-
-                    <button onclick="resetGame()" class="mt-6 bg-orange-600 text-white p-3 font-black uppercase text-[10px] tracking-tighter">Restart</button>
+                    <button onclick="resetGame()" class="bg-white text-black p-4 font-black uppercase text-[10px]">Re-Forge</button>
                 </div>
-            </div>
-            
-            <div class="mt-10 flex gap-10 text-slate-400 font-bold uppercase text-[10px] tracking-widest">
-                <span>⬅️ / ➡️ Move</span>
-                <span>⬆️ Rotate</span>
-                <span>⬇️ Drop</span>
             </div>
         </div>
     </main>
 
     <script>
-        // --- NAVIGATION ---
         function switchTab(id) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active-tab'));
@@ -146,7 +149,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- WHATSAPP ---
         function sendWhatsApp() {
             const type = document.getElementById('wa_type').value;
             const dims = document.getElementById('wa_dims').value;
@@ -155,12 +157,11 @@
             window.open(`https://wa.me/27663544654?text=${msg}`, '_blank');
         }
 
-        // --- FULL TETRIS ENGINE ---
+        // --- TETRIS ENGINE ---
         const canvas = document.getElementById('tetris');
         const context = canvas.getContext('2d');
         const nextCanvas = document.getElementById('next');
         const nextContext = nextCanvas.getContext('2d');
-
         context.scale(20, 20);
         nextContext.scale(20, 20);
 
@@ -173,90 +174,51 @@
             'S': [[0,6,6],[6,6,0],[0,0,0]],
             'T': [[0,7,0],[7,7,7],[0,0,0]]
         };
+        const COLORS = [null, '#38bdf8', '#ea580c', '#818cf8', '#facc15', '#ef4444', '#4ade80', '#a855f7'];
 
-        const COLORS = [null, '#38bdf8', '#fb923c', '#818cf8', '#facc15', '#ef4444', '#4ade80', '#a855f7'];
-
-        function createMatrix(w, h) { return Array.from({length: h}, () => Array(w).fill(0)); }
-
-        function drawMatrix(matrix, offset, ctx) {
-            matrix.forEach((row, y) => {
-                row.forEach((value, x) => {
-                    if (value !== 0) {
-                        ctx.fillStyle = COLORS[value];
-                        ctx.fillRect(x + offset.x, y + offset.y, 1, 1);
-                        ctx.lineWidth = 0.05;
-                        ctx.strokeStyle = '#000';
-                        ctx.strokeRect(x + offset.x, y + offset.y, 1, 1);
-                    }
-                });
-            });
-        }
-
-        function collide(arena, player) {
-            const [m, o] = [player.matrix, player.pos];
-            for (let y = 0; y < m.length; ++y) {
-                for (let x = 0; x < m[y].length; ++x) {
-                    if (m[y][x] !== 0 && (arena[y + o.y] && arena[y + o.y][x + o.x]) !== 0) return true;
-                }
-            }
-            return false;
-        }
-
-        function merge(arena, player) {
-            player.matrix.forEach((row, y) => {
-                row.forEach((value, x) => {
-                    if (value !== 0) arena[y + player.pos.y][x + player.pos.x] = value;
-                });
-            });
-        }
-
-        function rotate(matrix, dir) {
-            for (let y = 0; y < matrix.length; ++y) {
-                for (let x = 0; x < y; ++x) { [matrix[x][y], matrix[y][x]] = [matrix[y][x], matrix[x][y]]; }
-            }
-            if (dir > 0) matrix.forEach(row => row.reverse()); else matrix.reverse();
-        }
-
-        function arenaSweep() {
-            let rowCount = 1;
-            outer: for (let y = arena.length - 1; y > 0; --y) {
-                for (let x = 0; x < arena[y].length; ++x) {
-                    if (arena[y][x] === 0) continue outer;
-                }
-                const row = arena.splice(y, 1)[0].fill(0);
-                arena.unshift(row);
-                ++y;
-                player.score += rowCount * 100;
-                rowCount *= 2;
-            }
-            document.getElementById('score').innerText = player.score;
-        }
-
-        let arena = createMatrix(12, 20);
+        let arena = Array.from({length: 20}, () => Array(12).fill(0));
         let player = { pos: {x: 0, y: 0}, matrix: null, score: 0 };
         let nextPiece = null;
-        let paused = false, dropCounter = 0, dropInterval = 1000, lastTime = 0;
+        let paused = false, dropCounter = 0, lastTime = 0;
 
         function playerReset() {
-            const pieces = 'ILJOTSZ';
-            if (!nextPiece) nextPiece = PIECES[pieces[pieces.length * Math.random() | 0]];
+            const p = 'ILJOTSZ';
+            if (!nextPiece) nextPiece = PIECES[p[p.length * Math.random() | 0]];
             player.matrix = nextPiece;
-            nextPiece = PIECES[pieces[pieces.length * Math.random() | 0]];
+            nextPiece = PIECES[p[p.length * Math.random() | 0]];
             player.pos.y = 0;
-            player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
-            
+            player.pos.x = 4;
             if (collide(arena, player)) {
                 paused = true;
-                alert("Game Over! Score: " + player.score);
+                alert("Arc Broken! Final Mass: " + player.score);
                 resetGame();
             }
             drawNext();
         }
 
+        function collide(a, p) {
+            const [m, o] = [p.matrix, p.pos];
+            for (let y = 0; y < m.length; ++y) {
+                for (let x = 0; x < m[y].length; ++x) {
+                    if (m[y][x] !== 0 && (a[y + o.y] && a[y + o.y][x + o.x]) !== 0) return true;
+                }
+            }
+            return false;
+        }
+
+        function drawMatrix(m, o, ctx) {
+            m.forEach((r, y) => r.forEach((v, x) => {
+                if (v) {
+                    ctx.fillStyle = COLORS[v];
+                    ctx.fillRect(x + o.x, y + o.y, 1, 1);
+                }
+            }));
+        }
+
         function drawNext() {
-            nextContext.fillStyle = '#000';
-            nextContext.fillRect(0, 0, 5, 5);
-            drawMatrix(nextPiece, {x: 1, y: 1}, nextContext);
+            nextContext.fillStyle = '#0f172a';
+            nextContext.fillRect(0,0,5,5);
+            drawMatrix(nextPiece, {x:1, y:1}, nextContext);
         }
 
         function update(time = 0) {
@@ -264,39 +226,46 @@
             const dt = time - lastTime;
             lastTime = time;
             dropCounter += dt;
-            if (dropCounter > dropInterval) {
+            if (dropCounter > 1000) {
                 player.pos.y++;
                 if (collide(arena, player)) {
                     player.pos.y--;
-                    merge(arena, player);
+                    player.matrix.forEach((r,y)=>r.forEach((v,x)=>{if(v) arena[y+player.pos.y][x+player.pos.x]=v}));
                     playerReset();
-                    arenaSweep();
+                    // Sweep logic
+                    outer: for (let y = arena.length - 1; y > 0; --y) {
+                        for (let x = 0; x < arena[y].length; ++x) if (arena[y][x] === 0) continue outer;
+                        arena.splice(y, 1); arena.unshift(new Array(12).fill(0));
+                        player.score += 100;
+                    }
+                    document.getElementById('score').innerText = player.score;
                 }
                 dropCounter = 0;
             }
-            context.fillStyle = '#000';
-            context.fillRect(0, 0, canvas.width, canvas.height);
-            drawMatrix(arena, {x: 0, y: 0}, context);
+            context.fillStyle = '#000'; context.fillRect(0,0,12,20);
+            drawMatrix(arena, {x:0, y:0}, context);
             drawMatrix(player.matrix, player.pos, context);
             requestAnimationFrame(update);
         }
 
         function resetGame() {
-            arena = createMatrix(12, 20);
-            player.score = 0;
+            arena.forEach(r => r.fill(0)); player.score = 0;
             document.getElementById('score').innerText = 0;
-            paused = false;
-            nextPiece = null;
-            playerReset();
-            update();
+            paused = false; nextPiece = null;
+            playerReset(); update();
         }
 
         window.addEventListener('keydown', e => {
-            if ([37, 38, 39, 40].includes(e.keyCode)) e.preventDefault();
-            if (e.keyCode === 37) { player.pos.x--; if (collide(arena, player)) player.pos.x++; }
-            if (e.keyCode === 39) { player.pos.x++; if (collide(arena, player)) player.pos.x--; }
-            if (e.keyCode === 40) { player.pos.y++; if (collide(arena, player)) player.pos.y--; }
-            if (e.keyCode === 38) { rotate(player.matrix, 1); if (collide(arena, player)) rotate(player.matrix, -1); }
+            if ([37,38,39,40].includes(e.keyCode)) e.preventDefault();
+            if (e.keyCode === 37) { player.pos.x--; if(collide(arena, player)) player.pos.x++; }
+            if (e.keyCode === 39) { player.pos.x++; if(collide(arena, player)) player.pos.x--; }
+            if (e.keyCode === 40) { player.pos.y++; if(collide(arena, player)) player.pos.y--; }
+            if (e.keyCode === 38) {
+                const m = player.matrix;
+                for(let y=0; y<m.length; ++y) { for(let x=0; x<y; ++x) [m[x][y],m[y][x]]=[m[y][x],m[x][y]]; }
+                m.forEach(r => r.reverse());
+                if(collide(arena, player)) { m.forEach(r => r.reverse()); for(let y=0; y<m.length; ++y) { for(let x=0; x<y; ++x) [m[x][y],m[y][x]]=[m[y][x],m[x][y]]; } }
+            }
         });
     </script>
 </body>
