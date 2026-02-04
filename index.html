@@ -3,162 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J-Bay Welders | Precision Engineering & Marine Fabrication</title>
+    <title>J-Bay Welders | Industrial Engineering & Marine Fabrication Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Outfit', sans-serif; scroll-behavior: smooth; }
-        .hero-bg { 
-            background: linear-gradient(rgba(15,23,42,0.85), rgba(15,23,42,0.85)), 
-            url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1920'); 
-            background-size: cover; background-position: center; 
-        }
-        .review-card { display: none; }
-        .review-card.active { display: block; animation: flipIn 0.6s ease-out; }
-        
-        @keyframes flipIn {
-            0% { transform: perspective(400px) rotateX(90deg); opacity: 0; }
-            100% { transform: perspective(400px) rotateX(0deg); opacity: 1; }
-        }
-
-        .wa-float {
-            position: fixed; width: 60px; height: 60px; bottom: 40px; right: 40px;
-            background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center;
-            font-size: 30px; box-shadow: 2px 2px 10px rgba(0,0,0,0.2); z-index: 100;
-        }
+        body { font-family: 'Outfit', sans-serif; scroll-behavior: smooth; overflow-x: hidden; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: slideUp 0.4s ease-out; }
+        .hero-gradient { background: linear-gradient(90deg, #0f172a 0%, rgba(15, 23, 42, 0.7) 100%), url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1920'); background-size: cover; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .orange-glow:hover { box-shadow: 0 0 20px rgba(234, 88, 12, 0.4); }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900">
 
-    <nav class="bg-white/90 backdrop-blur-md border-b sticky top-0 z-[100] px-6 py-4 flex justify-between items-center">
-        <div class="text-2xl font-black italic tracking-tighter uppercase">
-            J-BAY <span class="text-orange-600">WELDERS</span>
+    <div class="bg-orange-600 text-white text-[10px] font-black uppercase tracking-[0.3em] py-2 text-center px-4">
+        Emergency Breakdown Repairs: +27 66 354 4654 | Serving Jeffreys Bay & Greater Kouga Area
+    </div>
+
+    <nav class="glass border-b sticky top-0 z-[1000] px-6 lg:px-12 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="w-10 h-10 bg-slate-900 flex items-center justify-center rounded-sm">
+                <span class="text-orange-600 font-black text-xl">J</span>
+            </div>
+            <div class="text-2xl font-black tracking-tighter uppercase leading-none">
+                J-BAY <br><span class="text-orange-600">WELDERS</span>
+            </div>
         </div>
-        <div class="hidden md:flex gap-8 font-bold text-sm uppercase tracking-widest items-center">
-            <a href="#services" class="hover:text-orange-600 transition">Services</a>
-            <a href="#quote" class="bg-slate-900 text-white px-6 py-2 rounded-sm hover:bg-orange-600 transition">Get A Quote</a>
+
+        <div class="hidden lg:flex gap-8 font-bold text-xs uppercase tracking-widest items-center">
+            <button onclick="switchTab('home')" class="nav-link text-orange-600 hover:text-orange-600 transition" id="nav-home">Home</button>
+            <button onclick="switchTab('services')" class="nav-link hover:text-orange-600 transition" id="nav-services">Services</button>
+            <button onclick="switchTab('specifications')" class="nav-link hover:text-orange-600 transition" id="nav-specifications">Technical Specs</button>
+            <button onclick="switchTab('gallery')" class="nav-link hover:text-orange-600 transition" id="nav-gallery">Project Gallery</button>
+            <button onclick="switchTab('about')" class="nav-link hover:text-orange-600 transition" id="nav-about">About Us</button>
+            <a href="#quote-section" class="bg-slate-900 text-white px-6 py-3 rounded-sm hover:bg-orange-600 transition-all orange-glow">Get Official Quote</a>
         </div>
     </nav>
 
-    <header class="hero-bg h-[85vh] flex items-center justify-center text-center text-white px-6">
-        <div class="max-w-4xl">
-            <span class="text-orange-500 font-bold tracking-[0.3em] uppercase mb-4 block">Est. Jeffreys Bay</span>
-            <h1 class="text-6xl md:text-8xl font-black mb-6 leading-none uppercase italic">Heavy Duty <br>Precision.</h1>
-            <p class="text-xl md:text-2xl text-slate-300 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
-                Specialists in Marine-Grade Stainless Steel and Custom Structural Engineering.
-            </p>
-            <div class="flex flex-col md:flex-row gap-4 justify-center">
-                <a href="#quote" class="bg-orange-600 hover:bg-orange-700 text-white px-10 py-5 rounded-sm font-black text-lg transition-all transform hover:scale-105">
-                    START YOUR PROJECT
-                </a>
+    <main id="home" class="tab-content active">
+        <section class="hero-gradient h-[85vh] flex items-center px-6 lg:px-24">
+            <div class="max-w-4xl">
+                <h1 class="text-6xl lg:text-9xl font-black text-white leading-none uppercase mb-6 italic">Precision <br><span class="text-orange-600">Engineering.</span></h1>
+                <p class="text-xl text-slate-300 mb-10 max-w-2xl font-light leading-relaxed">
+                    Heavy-duty industrial welding and marine-grade fabrication. We specialize in structural integrity for highly corrosive coastal environments.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="switchTab('services')" class="bg-orange-600 text-white px-10 py-5 font-black text-lg hover:bg-white hover:text-orange-600 transition-all">VIEW CAPABILITIES</button>
+                    <a href="https://wa.me/27663544654" class="bg-white text-slate-900 px-10 py-5 font-black text-lg hover:bg-slate-200 transition-all">WHATSAPP DIRECT</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-12 bg-white border-b px-6">
+            <div class="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="border-l-4 border-orange-600 pl-6">
+                    <h3 class="text-4xl font-black uppercase">10+ Tons</h3>
+                    <p class="text-xs text-slate-500 uppercase font-bold tracking-widest">Steel Processed Monthly</p>
+                </div>
+                <div class="border-l-4 border-orange-600 pl-6">
+                    <h3 class="text-4xl font-black uppercase">316L</h3>
+                    <p class="text-xs text-slate-500 uppercase font-bold tracking-widest">Marine Grade Standard</p>
+                </div>
+                <div class="border-l-4 border-orange-600 pl-6">
+                    <h3 class="text-4xl font-black uppercase">100%</h3>
+                    <p class="text-xs text-slate-500 uppercase font-bold tracking-widest">SABS Compliance</p>
+                </div>
+                <div class="border-l-4 border-orange-600 pl-6">
+                    <h3 class="text-4xl font-black uppercase">24/7</h3>
+                    <p class="text-xs text-slate-500 uppercase font-bold tracking-widest">Industrial Support</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <main id="services" class="tab-content py-20 px-6 lg:px-24 bg-white">
+        <h2 class="text-5xl font-black uppercase mb-16 text-center italic">Industrial <span class="text-orange-600">Solutions</span></h2>
+        <div class="grid lg:grid-cols-3 gap-12">
+            <div class="group cursor-pointer">
+                <div class="h-64 bg-slate-200 mb-6 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <h3 class="text-2xl font-black uppercase mb-4">Marine Fabrication</h3>
+                <p class="text-slate-500 mb-4">Custom stainless steel fabrication for yachts and commercial vessels. T-Tops, bow rails, and engine mounts.</p>
+                <div class="h-1 w-20 bg-orange-600"></div>
+            </div>
+            <div class="group cursor-pointer">
+                <div class="h-64 bg-slate-200 mb-6 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <h3 class="text-2xl font-black uppercase mb-4">Structural Engineering</h3>
+                <p class="text-slate-500 mb-4">Heavy steel beams, warehouse frameworks, and custom architectural staircases and balustrades.</p>
+                <div class="h-1 w-20 bg-orange-600"></div>
+            </div>
+            <div class="group cursor-pointer">
+                <div class="h-64 bg-slate-200 mb-6 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1535141104552-61054a01084a?auto=format&fit=crop&w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                </div>
+                <h3 class="text-2xl font-black uppercase mb-4">Security Infrastructure</h3>
+                <p class="text-slate-500 mb-4">High-security automated gates, industrial fencing, and custom reinforced safe rooms.</p>
+                <div class="h-1 w-20 bg-orange-600"></div>
             </div>
         </div>
-    </header>
+    </main>
 
-    <section id="quote" class="py-24 bg-slate-900 text-white overflow-hidden relative">
-        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 relative z-10">
+    <main id="specifications" class="tab-content py-20 px-6 lg:px-24">
+        <h2 class="text-4xl font-black uppercase mb-12 italic">Material & <span class="text-orange-600">Compliance</span> Specs</h2>
+        <div class="overflow-x-auto bg-white shadow-xl">
+            <table class="w-full text-left">
+                <thead class="bg-slate-900 text-white uppercase text-xs tracking-widest">
+                    <tr>
+                        <th class="p-6">Material Category</th>
+                        <th class="p-6">Standard Used</th>
+                        <th class="p-6">Applications</th>
+                        <th class="p-6">Durability Rating</th>
+                    </tr>
+                </thead>
+                <tbody class="text-sm">
+                    <tr class="border-b">
+                        <td class="p-6 font-bold uppercase">Stainless Steel</td>
+                        <td class="p-6">AISI 316 / 316L (Marine)</td>
+                        <td class="p-6">Boat Fittings, Coastal Balustrades</td>
+                        <td class="p-6 text-green-600 font-black italic uppercase">Maximum (Anti-Corrosive)</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="p-6 font-bold uppercase">Carbon Steel</td>
+                        <td class="p-6">ASTM A36 / S355JR</td>
+                        <td class="p-6">Beams, Pillars, Gate Frames</td>
+                        <td class="p-6 text-orange-600 font-black italic uppercase">High (Industrial)</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="p-6 font-bold uppercase">Aluminum</td>
+                        <td class="p-6">5083 / 6061 Grade</td>
+                        <td class="p-6">Canopies, Fuel Tanks, Toolboxes</td>
+                        <td class="p-6 text-blue-600 font-black italic uppercase">Lightweight High-Strength</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <main id="gallery" class="tab-content py-20 px-6 lg:px-24">
+        <h2 class="text-5xl font-black uppercase mb-16 text-center italic">Project <span class="text-orange-600">Archive</span></h2>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="h-80 bg-slate-200 rounded-sm overflow-hidden"><img src="https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=800" class="w-full h-full object-cover"></div>
+            <div class="h-80 bg-slate-200 rounded-sm overflow-hidden"><img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=800" class="w-full h-full object-cover"></div>
+            <div class="h-80 bg-slate-200 rounded-sm overflow-hidden"><img src="https://images.unsplash.com/photo-1589939705384-5185138a04b9?auto=format&fit=crop&w=800" class="w-full h-full object-cover"></div>
+            <div class="h-80 bg-slate-200 rounded-sm overflow-hidden"><img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800" class="w-full h-full object-cover"></div>
+        </div>
+    </main>
+
+    <main id="about" class="tab-content py-20 px-6 lg:px-24">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-                <h2 class="text-5xl font-black mb-8 uppercase italic leading-tight">Request a <br><span class="text-orange-600">Site Inspection</span></h2>
-                <p class="text-slate-400 text-lg mb-8">Fill out the form below. Your project details will be sent directly to our team via WhatsApp.</p>
-                
-                <div class="space-y-6">
-                    <div class="flex items-center gap-4 border-l-2 border-orange-600 pl-4">
-                        <div>
-                            <p class="text-sm uppercase text-slate-500 font-bold">Primary Lead Manager</p>
-                            <p class="font-bold">+27 66 354 4654</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-4 border-l-2 border-orange-600 pl-4">
-                        <div>
-                            <p class="text-sm uppercase text-slate-500 font-bold">Secondary/Louise</p>
-                            <p class="font-bold">+27 67 409 9143</p>
-                        </div>
+                <h2 class="text-5xl font-black uppercase mb-8 italic italic">The J-Bay <br><span class="text-orange-600">Standard</span></h2>
+                <p class="text-slate-600 text-lg mb-6 leading-relaxed">
+                    Founded in the heart of Jeffreys Bay, we understand the unique challenges of coastal engineering. Salt air and extreme wind require more than just a "standard weld"—they require material science and precision.
+                </p>
+                <div class="space-y-4">
+                    <div class="bg-slate-100 p-6 border-l-4 border-slate-900">
+                        <h4 class="font-black uppercase mb-2 italic">Our Mission</h4>
+                        <p class="text-sm text-slate-500">To provide J-Bay and the Kouga region with infrastructure that lasts a lifetime.</p>
                     </div>
                 </div>
             </div>
+            <div class="bg-slate-900 p-12 text-white">
+                <h3 class="text-2xl font-black uppercase mb-6 text-orange-600 italic">Safety Policy</h3>
+                <ul class="space-y-4 text-sm font-bold uppercase tracking-widest">
+                    <li>✓ Certified Pressure Vessel Welding</li>
+                    <li>✓ Full Site Risk Assessment</li>
+                    <li>✓ Professional Grade Machinery</li>
+                    <li>✓ Insured Fabrication Work</li>
+                </ul>
+            </div>
+        </div>
+    </main>
 
-            <form id="leadForm" class="bg-white p-8 rounded-sm text-slate-900 space-y-4 shadow-2xl">
-                <div class="grid grid-cols-2 gap-4">
-                    <input type="text" id="name" placeholder="Name" required class="w-full p-4 border rounded-sm bg-slate-50 outline-none focus:ring-2 focus:ring-orange-600">
-                    <input type="text" id="location" placeholder="Area (e.g. Wavecrest)" required class="w-full p-4 border rounded-sm bg-slate-50 outline-none focus:ring-2 focus:ring-orange-600">
+    <section id="quote-section" class="py-24 bg-slate-900 text-white px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-black uppercase italic mb-4">Request <span class="text-orange-600">Inspection</span></h2>
+                <p class="text-slate-400">Formal project briefs are processed and routed to our technical lead immediately.</p>
+            </div>
+            
+            <form id="masterForm" class="bg-white p-8 lg:p-12 text-slate-900 space-y-6 shadow-2xl rounded-sm">
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Full Name / Company</label>
+                        <input type="text" id="clientName" required class="w-full p-4 border bg-slate-50 focus:border-orange-600 outline-none">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Installation Area</label>
+                        <input type="text" id="clientArea" placeholder="e.g. Wavecrest" required class="w-full p-4 border bg-slate-50 focus:border-orange-600 outline-none">
+                    </div>
                 </div>
-                <select id="service" class="w-full p-4 border rounded-sm bg-slate-50 font-bold outline-none">
-                    <option>Marine Stainless Steel</option>
-                    <option>Structural Steel/Gates</option>
-                    <option>Aluminum/Trailer Work</option>
-                    <option>Rust Repair & Restoration</option>
-                </select>
-                <textarea id="description" placeholder="Project details..." required class="w-full p-4 border rounded-sm bg-slate-50 h-32 outline-none focus:ring-2 focus:ring-orange-600"></textarea>
+                
+                <div class="space-y-2">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Engineering Category</label>
+                    <select id="projectCategory" class="w-full p-4 border bg-slate-50 font-bold outline-none">
+                        <option>Marine Grade Stainless (316L)</option>
+                        <option>Structural Industrial Steel</option>
+                        <option>Custom Security & Gates</option>
+                        <option>Aluminum TIG Fabrication</option>
+                        <option>Emergency Breakdown/Repair</option>
+                    </select>
+                </div>
 
-                <button type="submit" class="w-full bg-green-600 text-white font-black py-5 rounded-sm uppercase tracking-widest hover:bg-green-700 transition-all flex items-center justify-center gap-3">
-                    SUBMIT TO MANAGERS
+                <div class="space-y-2">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-slate-400">Project Specifics</label>
+                    <textarea id="projectDetails" placeholder="Describe dimensions, materials, and deadlines..." required class="w-full p-4 border bg-slate-50 h-32 outline-none focus:border-orange-600"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-orange-600 text-white py-6 font-black uppercase tracking-[0.2em] hover:bg-slate-900 transition-all orange-glow">
+                    Submit Project to Lead Engineer
                 </button>
             </form>
         </div>
     </section>
 
-    <section id="reviews" class="py-24 bg-white px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl font-black mb-12 uppercase italic tracking-widest">Client Reviews</h2>
-            <div class="relative h-32 flex items-center justify-center">
-                <div class="review-card active px-6">
-                    <p class="text-2xl italic font-light text-slate-600">"The best marine-grade work in Jeffreys Bay. Highly durable."</p>
-                    <h4 class="font-black text-orange-600 mt-4 uppercase">— Pieter Venter</h4>
-                </div>
-                <div class="review-card px-6">
-                    <p class="text-2xl italic font-light text-slate-600">"Professional service and very strong structural welding."</p>
-                    <h4 class="font-black text-orange-600 mt-4 uppercase">— Sarah Jenkins</h4>
-                </div>
+    <footer class="bg-white border-t py-12 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-8">
+            <div class="text-center lg:text-left">
+                <p class="font-black text-xl italic uppercase">J-BAY <span class="text-orange-600">WELDERS</span></p>
+                <p class="text-[10px] text-slate-400 uppercase tracking-widest">Master Fabricators & Engineers</p>
+            </div>
+            <div class="flex gap-8 text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                <p>© 2026 J-Bay Welders</p>
+                <p>Industrial Area, J-Bay</p>
+                <p>+27 66 354 4654</p>
             </div>
         </div>
-    </section>
-
-    <footer class="bg-slate-900 py-12 text-center text-slate-600">
-        <div class="text-xl font-black italic mb-4 text-white uppercase">J-Bay Welders</div>
-        <p class="text-xs uppercase tracking-widest">© 2026 J-Bay Welders Industrial. All Rights Reserved.</p>
     </footer>
 
-    <div class="fixed bottom-6 right-6 flex flex-col gap-3 z-[200]">
-        <a href="https://wa.me/27674099143" class="bg-white text-slate-900 px-4 py-2 rounded-full shadow-xl border flex items-center gap-2 font-bold text-sm hover:bg-slate-100 transition">
-            <span class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span> Chat with Louise
-        </a>
-        <a href="https://wa.me/27663544654" class="bg-green-600 text-white px-4 py-2 rounded-full shadow-xl flex items-center gap-2 font-bold text-sm hover:bg-green-700 transition">
-            <span class="w-3 h-3 bg-white rounded-full"></span> Chat with Manager
-        </a>
-    </div>
+    <a href="https://wa.me/27663544654" class="lg:hidden fixed bottom-6 left-6 right-6 bg-green-600 text-white text-center py-4 font-black uppercase tracking-widest shadow-2xl z-[500]">
+        Emergency WhatsApp
+    </a>
 
     <script>
-        // FORM SUBMISSION LOGIC
-        document.getElementById('leadForm').onsubmit = function(e) {
-            e.preventDefault();
+        // TAB SWITCHING LOGIC
+        function switchTab(tabId) {
+            // Hide all content
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            // Reset all nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('text-orange-600');
+            });
+            // Show active tab
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById('nav-' + tabId).classList.add('text-orange-600');
             
-            const name = document.getElementById('name').value;
-            const location = document.getElementById('location').value;
-            const service = document.getElementById('service').value;
-            const desc = document.getElementById('description').value;
-            
-            // This number gets the full lead data
-            const leadRecipient = "27663544654"; 
-
-            const message = `*NEW PROJECT LEAD - J-BAY WELDERS*%0A` +
-                            `--------------------------%0A` +
-                            `*Client:* ${name}%0A` +
-                            `*Area:* ${location}%0A` +
-                            `*Service:* ${service}%0A` +
-                            `*Details:* ${desc}`;
-
-            window.open(`https://wa.me/${leadRecipient}?text=${message}`, '_blank');
-        };
-
-        // REVIEW SLIDER
-        let currentReview = 0;
-        const reviews = document.querySelectorAll('.review-card');
-        function flipReviews() {
-            reviews[currentReview].classList.remove('active');
-            currentReview = (currentReview + 1) % reviews.length;
-            reviews[currentReview].classList.add('active');
+            // Scroll to top of tab
+            window.scrollTo(0, 0);
         }
-        setInterval(flipReviews, 5000);
+
+        // FORM LOGIC
+        document.getElementById('masterForm').onsubmit = function(e) {
+            e.preventDefault();
+            const phone = "27663544654";
+            const name = document.getElementById('clientName').value;
+            const area = document.getElementById('clientArea').value;
+            const category = document.getElementById('projectCategory').value;
+            const details = document.getElementById('projectDetails').value;
+
+            const message = `*J-BAY WELDERS ENGINEERING BRIEF*%0A` +
+                            `----------------------------------%0A` +
+                            `*CLIENT:* ${name}%0A` +
+                            `*AREA:* ${area}%0A` +
+                            `*SERVICE:* ${category}%0A` +
+                            `*DETAILS:* ${details}%0A` +
+                            `----------------------------------%0A` +
+                            `_Sent via Official Business Portal_`;
+
+            window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+        };
     </script>
 </body>
 </html>
