@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J-Bay Welders | Industrial Precision Engineering</title>
+    <title>J-Bay Welders | Premier Industrial Engineering</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
@@ -12,157 +12,163 @@
         .tab-content.active { display: block; animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         
         .hero-gradient { 
-            background: linear-gradient(90deg, #020617 45%, rgba(15, 23, 42, 0.2) 100%), 
+            background: linear-gradient(90deg, #020617 50%, rgba(15, 23, 42, 0.4) 100%), 
             url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=1920'); 
             background-size: cover; background-position: center;
         }
 
-        /* --- MICROWORKER ANIMATIONS --- */
-        @keyframes arc-burn { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1.5); filter: blur(1px); } }
+        /* --- ANIMATIONS --- */
+        @keyframes arc-burn { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1.5); } }
         .arc-flare { animation: arc-burn 0.05s infinite; fill: #60a5fa; }
-        @keyframes laser-pulse { 0% { width: 0; opacity: 0; } 50% { width: 80px; opacity: 1; } 100% { width: 80px; opacity: 0; } }
-        .laser-beam { animation: laser-pulse 2s infinite; stroke: #ef4444; stroke-width: 1; }
-        @keyframes hoist { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        .hoist-action { animation: hoist 3s ease-in-out infinite; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- TETRIS ARCADE --- */
-        #tetris-container { position: relative; width: 280px; margin: 0 auto; background: #000; border: 6px solid #1e293b; box-shadow: 0 0 50px rgba(249, 115, 22, 0.15); touch-action: none; }
-        canvas { display: block; width: 100%; height: auto; image-rendering: pixelated; }
-        .game-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 20; }
-
-        .nav-btn { font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; transition: all 0.3s; padding: 10px 0; border-bottom: 2px solid transparent; color: #94a3b8; }
+        /* --- UI ELEMENTS --- */
+        .nav-btn { font-size: 11px; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; transition: all 0.3s; color: #94a3b8; border-bottom: 2px solid transparent; }
         .active-tab { color: #f97316 !important; border-bottom: 2px solid #f97316; }
+        .glass-panel { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        
+        /* --- ARCADE --- */
+        #tetris-container { position: relative; width: 260px; margin: 0 auto; background: #000; border: 4px solid #1e293b; }
+        canvas { display: block; width: 100%; height: auto; image-rendering: pixelated; }
     </style>
 </head>
 <body>
 
-    <nav class="sticky top-0 z-[1000] px-6 lg:px-16 py-6 flex justify-between items-center bg-slate-950/90 backdrop-blur-md border-b border-white/10">
+    <nav class="sticky top-0 z-[1000] px-6 lg:px-16 py-5 flex justify-between items-center bg-slate-950 border-b border-white/5">
         <div class="flex items-center gap-4">
-            <div class="text-2xl font-black tracking-tighter uppercase leading-none italic">J-BAY <br><span class="text-orange-600">WELDERS</span></div>
+            <div class="text-xl font-black tracking-tighter uppercase leading-tight italic">J-BAY <br><span class="text-orange-600">WELDERS</span></div>
         </div>
-        <div class="hidden lg:flex gap-10 items-center">
-            <button onclick="switchTab('home')" class="nav-btn active-tab" id="btn-home">Portal</button>
-            <button onclick="switchTab('tools')" class="nav-btn" id="btn-tools">Precision Tools</button>
-            <button onclick="switchTab('craft')" class="nav-btn" id="btn-craft">Work-Flow</button>
-            <button onclick="switchTab('arcade')" class="nav-btn" id="btn-arcade">Arcade</button>
-            <a href="tel:+27663544654" class="bg-orange-600 text-white px-6 py-2 rounded-sm font-black text-[10px] tracking-widest uppercase">Direct Line</a>
+        <div class="hidden lg:flex gap-8 items-center">
+            <button onclick="switchTab('home')" class="nav-btn active-tab" id="btn-home">Executive Portal</button>
+            <button onclick="switchTab('knowledge')" class="nav-btn" id="btn-knowledge">Useful Knowledge</button>
+            <button onclick="switchTab('whatsapp')" class="nav-btn" id="btn-whatsapp">Project Brief</button>
+            <button onclick="switchTab('arcade')" class="nav-btn" id="btn-arcade">The Arcade</button>
+            <a href="https://wa.me/27663544654" class="bg-orange-600 text-white px-5 py-2 rounded-sm font-black text-[10px] tracking-widest uppercase">Emergency Response</a>
         </div>
     </nav>
 
     <main id="home" class="tab-content active">
-        <section class="hero-gradient h-[85vh] flex items-center px-6 lg:px-24">
-            <div class="max-w-4xl">
-                <p class="text-orange-500 font-black tracking-[1em] uppercase text-xs mb-4">Industrial Engineering Solutions</p>
-                <h1 class="text-7xl lg:text-[11rem] font-black leading-[0.85] uppercase mb-10 italic">Steel <br><span class="text-orange-600">Force.</span></h1>
-                <p class="text-xl max-w-xl text-slate-300 font-light leading-relaxed border-l-4 border-orange-600 pl-6 bg-slate-900/40 py-4 pr-4">Jeffreys Bay's premier choice for structural steel fabrication, security gate reinforcement, and marine-grade stainless steel finishes.</p>
+        <section class="hero-gradient min-h-[90vh] flex items-center px-6 lg:px-24 py-20">
+            <div class="max-w-5xl">
+                <p class="text-orange-500 font-black tracking-[0.8em] uppercase text-xs mb-6">Tier-1 Structural Engineering</p>
+                <h1 class="text-6xl lg:text-[9rem] font-black leading-[0.85] uppercase mb-12 italic">Precision <br><span class="text-orange-600">Execution.</span></h1>
+                
+                <div class="grid lg:grid-cols-2 gap-10">
+                    <div class="glass-panel p-8 border-l-8 border-orange-600">
+                        <h3 class="text-xl font-black uppercase mb-4 italic text-orange-500">Our Capability Statement</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-6">J-Bay Welders provides high-tensile structural solutions for the Eastern Cape's most demanding sectors. From marine-grade stainless steel to heavy-duty industrial framing, we combine SABS-compliant welding with architectural vision.</p>
+                        <ul class="text-[11px] uppercase tracking-widest font-bold space-y-2 text-slate-400">
+                            <li class="flex items-center gap-2"><span class="text-orange-600">■</span> ISO Standard Fabrication</li>
+                            <li class="flex items-center gap-2"><span class="text-orange-600">■</span> High-Pressure Pipe Welding</li>
+                            <li class="flex items-center gap-2"><span class="text-orange-600">■</span> Architectural Steel & Glass</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col justify-center gap-6">
+                        <div class="bg-white/5 p-6 rounded border border-white/5">
+                            <span class="text-4xl font-black text-orange-600 italic">24/7</span>
+                            <p class="text-xs uppercase tracking-widest font-bold mt-1">Operational Readiness</p>
+                        </div>
+                        <div class="bg-white/5 p-6 rounded border border-white/5">
+                            <span class="text-4xl font-black text-orange-600 italic">100%</span>
+                            <p class="text-xs uppercase tracking-widest font-bold mt-1">SABS Compliance Rate</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
-    <main id="tools" class="tab-content py-24 px-6 lg:px-24">
-        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-20">
-            <div>
-                <h2 class="text-5xl font-black uppercase mb-8 italic">Scientific <span class="text-orange-600">Analysis</span></h2>
-                <div class="p-10 bg-slate-900 text-white rounded-lg shadow-2xl space-y-6 border border-white/10">
-                    <div>
-                        <label class="text-[10px] uppercase tracking-widest text-slate-400">Material Profile</label>
-                        <select id="matType" class="w-full bg-slate-800 p-5 outline-none border-l-4 border-orange-600 font-bold mt-2 text-white">
-                            <option value="7850">Mild Steel Plate (7850 kg/m³)</option>
-                            <option value="8000">Stainless Steel 316L (8000 kg/m³)</option>
-                            <option value="2700">Aluminum 6061 (2700 kg/m³)</option>
-                        </select>
-                    </div>
-                    <div class="grid grid-cols-3 gap-4">
-                        <input type="number" id="matLen" placeholder="Length (m)" class="bg-slate-800 p-5 outline-none font-bold text-orange-500 placeholder-slate-500">
-                        <input type="number" id="matWidth" placeholder="Width (m)" class="bg-slate-800 p-5 outline-none font-bold text-orange-500 placeholder-slate-500">
-                        <input type="number" id="matThick" placeholder="Thick (mm)" class="bg-slate-800 p-5 outline-none font-bold text-orange-500 placeholder-slate-500">
-                    </div>
-                    <button onclick="calcSteel()" class="w-full bg-orange-600 py-6 font-black uppercase tracking-[0.3em] hover:bg-white hover:text-orange-600 transition-all">Calculate Mass</button>
-                    <div id="estResult" class="text-center text-6xl font-black text-orange-500 mt-6 tracking-tighter">0.00 <span class="text-xl">KG</span></div>
-                </div>
-            </div>
-            <div class="flex flex-col justify-center">
-                <h2 class="text-4xl font-black uppercase italic mb-4">Mass <span class="text-orange-600">Index</span></h2>
-                <p class="text-slate-400 leading-relaxed mb-8">Professional grade project estimation using industry-standard density physics. Accuracy guaranteed for structural load-bearing assessments.</p>
-                <div class="p-8 bg-white/5 border-r-8 border-orange-600 italic text-sm text-slate-300">
-                    $M = L \times W \times (T/1000) \times \rho$. Engineering precision for every brief.
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <main id="craft" class="tab-content py-24 px-6 lg:px-24 bg-slate-900/30">
-        <div class="max-w-6xl mx-auto text-center">
-            <h2 class="text-6xl font-black uppercase italic mb-20 text-center">The <span class="text-orange-600">Forge</span> Logic</h2>
+    <main id="knowledge" class="tab-content py-24 px-6 lg:px-24">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-5xl font-black uppercase italic mb-16">Technical <span class="text-orange-600">Resources</span></h2>
             <div class="grid lg:grid-cols-3 gap-8">
-                <div class="bg-slate-900/60 p-8 border border-white/5 rounded-2xl relative">
-                    <svg viewBox="0 0 200 120" class="w-full h-32 mb-6">
-                        <circle cx="40" cy="80" r="10" fill="#f97316"/><rect x="35" y="90" width="10" height="20" rx="5" fill="#1e293b"/>
-                        <rect x="45" y="85" width="15" height="5" fill="#475569"/><line x1="60" y1="87.5" x2="140" y2="87.5" class="laser-beam"/>
-                        <rect x="140" y="50" width="5" height="60" fill="#334155"/>
-                    </svg>
-                    <h4 class="font-black text-orange-500 uppercase italic text-xl">01. Measurement</h4>
-                    <p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Digital Site Survey</p>
+                <div class="bg-slate-900 p-8 border border-white/10 group hover:border-orange-600 transition">
+                    <h3 class="text-xl font-black uppercase mb-4 italic">Material Selection</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-4">Understanding the difference between 304 and 316 Stainless Steel is vital for coastal projects in J-Bay to prevent salt-air corrosion.</p>
+                    <span class="text-orange-500 text-[10px] font-black uppercase tracking-widest">Coastal Standards 101</span>
                 </div>
-                <div class="bg-slate-900/60 p-8 border border-white/5 rounded-2xl relative">
-                    <svg viewBox="0 0 200 120" class="w-full h-32 mb-6">
-                        <circle cx="100" cy="70" r="10" fill="#f97316"/><path d="M90,80 L110,80 L115,110 L85,110 Z" fill="#1e293b"/>
-                        <rect x="92" y="65" width="16" height="12" fill="#020617" stroke="#f97316"/>
-                        <rect x="60" y="110" width="80" height="4" fill="#64748b"/><circle cx="100" cy="110" r="8" class="arc-flare"/><circle cx="100" cy="110" r="3" fill="white"/>
-                    </svg>
-                    <h4 class="font-black text-orange-500 uppercase italic text-xl">02. Fabrication</h4>
-                    <p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">SABS Certified Welding</p>
+                <div class="bg-slate-900 p-8 border border-white/10 group hover:border-orange-600 transition">
+                    <h3 class="text-xl font-black uppercase mb-4 italic">Load Distribution</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-4">Proper I-Beam sizing ensures structural integrity. Always calculate point-loads before installing heavy security fixtures or mezzanines.</p>
+                    <span class="text-orange-500 text-[10px] font-black uppercase tracking-widest">Engineering Logic</span>
                 </div>
-                <div class="bg-slate-900/60 p-8 border border-white/5 rounded-2xl relative">
-                    <svg viewBox="0 0 200 120" class="w-full h-32 mb-6">
-                        <circle cx="150" cy="90" r="10" fill="#f97316"/><rect x="145" y="100" width="10" height="15" fill="#1e293b"/>
-                        <line x1="100" y1="0" x2="100" y2="60" stroke="#475569" stroke-width="2"/>
-                        <g class="hoist-action"><rect x="50" y="60" width="100" height="12" fill="#f97316"/></g>
-                    </svg>
-                    <h4 class="font-black text-orange-500 uppercase italic text-xl">03. Installation</h4>
-                    <p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Structural Deployment</p>
+                <div class="bg-slate-900 p-8 border border-white/10 group hover:border-orange-600 transition">
+                    <h3 class="text-xl font-black uppercase mb-4 italic">Welding Finishes</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-4">Galvanizing vs. Powder Coating: Galvanizing offers superior internal protection, while Powder Coating provides the elite aesthetic for corporate offices.</p>
+                    <span class="text-orange-500 text-[10px] font-black uppercase tracking-widest">Final Coating Guide</span>
                 </div>
             </div>
             
         </div>
     </main>
 
-    <main id="arcade" class="tab-content py-24 px-6 lg:px-24 bg-slate-950 min-h-screen">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-3 gap-12">
-            <div class="lg:col-span-1">
-                <div id="reg-form" class="bg-slate-900 p-8 border-l-4 border-orange-600 shadow-2xl">
-                    <h3 class="text-3xl font-black uppercase italic mb-6">Player <span class="text-orange-600">On-Boarding</span></h3>
-                    <form id="clientForm" class="space-y-4">
-                        <input type="text" id="clientName" placeholder="YOUR NAME / COMPANY" required class="w-full bg-slate-800 p-4 outline-none border border-white/5 font-bold text-white text-sm">
-                        <input type="email" id="clientEmail" placeholder="EMAIL ADDRESS" required class="w-full bg-slate-800 p-4 outline-none border border-white/5 font-bold text-white text-sm">
-                        <button type="submit" class="w-full bg-orange-600 py-4 font-black uppercase text-xs tracking-widest">Join Leaderboard</button>
-                    </form>
+    <main id="whatsapp" class="tab-content py-24 px-6 lg:px-24 bg-slate-950">
+        <div class="max-w-3xl mx-auto glass-panel p-12 border-t-8 border-orange-600">
+            <h2 class="text-4xl font-black uppercase italic mb-4">Project <span class="text-orange-600">Inception</span></h2>
+            <p class="text-slate-400 text-sm mb-10 uppercase tracking-widest">Answer the brief below to launch a project via WhatsApp.</p>
+            
+            <form id="waForm" class="space-y-6">
+                <div>
+                    <label class="block text-[10px] font-black uppercase tracking-widest text-orange-500 mb-2">Project Type</label>
+                    <select id="wa_type" class="w-full bg-slate-900 p-4 border border-white/10 font-bold outline-none text-white">
+                        <option>Structural Steel Framing</option>
+                        <option>Custom Security Gates</option>
+                        <option>Marine Stainless Steel</option>
+                        <option>Maintenance & Repair</option>
+                    </select>
                 </div>
-                <div class="mt-8 bg-orange-600 p-6 text-white font-black uppercase italic shadow-2xl text-center">
-                    🏆 TOP MONTHLY PLAYER WINS 5% OFF! 🏆<br>
-                    <span class="text-[10px] block mt-2 opacity-80">Winner chosen every month for a free consultation.</span>
+                <div>
+                    <label class="block text-[10px] font-black uppercase tracking-widest text-orange-500 mb-2">Primary Dimensions (Approx)</label>
+                    <input type="text" id="wa_dims" placeholder="e.g. 5m x 2m" class="w-full bg-slate-900 p-4 border border-white/10 font-bold outline-none text-white">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black uppercase tracking-widest text-orange-500 mb-2">Urgency Level</label>
+                    <select id="wa_urgency" class="w-full bg-slate-900 p-4 border border-white/10 font-bold outline-none text-white">
+                        <option>Routine (Next 14 Days)</option>
+                        <option>Priority (This Week)</option>
+                        <option>Critical (Emergency Response)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black uppercase tracking-widest text-orange-500 mb-2">Additional Specifications</label>
+                    <textarea id="wa_specs" placeholder="Special requirements, finishes, or site conditions..." class="w-full bg-slate-900 p-4 border border-white/10 font-bold outline-none text-white h-32"></textarea>
+                </div>
+                <button type="button" onclick="sendWhatsApp()" class="w-full bg-orange-600 py-6 font-black uppercase tracking-[0.3em] hover:bg-green-600 transition-all flex justify-center items-center gap-4">
+                    Send to Project Lead (WhatsApp)
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <main id="arcade" class="tab-content py-24 px-6 lg:px-24">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-3 gap-12 items-start">
+            
+            <div class="lg:col-span-1">
+                <div id="auth-panel" class="bg-slate-900 p-8 border-l-4 border-orange-600">
+                    </div>
+                <div class="mt-8 p-6 bg-orange-600 text-white font-black uppercase italic shadow-2xl">
+                    🏆 MONTHLY PRIZE: 5% DISCOUNT 🏆
+                    <p class="text-[9px] mt-1 font-bold">Top score every month wins a structural audit.</p>
                 </div>
             </div>
 
             <div class="lg:col-span-1 flex flex-col items-center">
                 <div id="tetris-container">
                     <canvas id="tetris" width="240" height="400"></canvas>
-                    <div id="game-overlay" class="game-overlay text-center">
-                        <h3 class="text-4xl font-black mb-2 italic uppercase">Arc Broken</h3>
-                        <p class="text-orange-500 text-xl font-bold mb-6">FINAL SCORE: <span id="final-score">0</span></p>
-                        <button onclick="resetGame()" class="bg-orange-600 px-8 py-3 font-black uppercase text-xs">Restart</button>
+                    <div id="game-over" class="absolute inset-0 bg-black/90 flex flex-col items-center justify-center hidden z-20">
+                        <h3 class="text-3xl font-black italic mb-2 uppercase">Arc Broken</h3>
+                        <p class="text-orange-500 font-bold mb-6">SCORE: <span id="final-score">0</span></p>
+                        <button onclick="resetGame()" class="bg-orange-600 px-10 py-3 font-black uppercase text-xs">Restart</button>
                     </div>
                 </div>
                 <div class="mt-6 text-4xl font-black italic">SCORE: <span id="score" class="text-orange-600">0</span></div>
             </div>
 
             <div class="lg:col-span-1">
-                <div class="bg-slate-900 p-8 border-r-4 border-orange-600 h-full shadow-2xl">
-                    <h3 class="text-2xl font-black uppercase italic mb-8 tracking-widest">Top <span class="text-orange-600">Stackers</span></h3>
+                <div class="bg-slate-900 p-8 border-r-4 border-orange-600 h-[500px] overflow-y-auto">
+                    <h3 class="text-2xl font-black uppercase italic mb-8 tracking-widest text-orange-600">The Leaderboard</h3>
                     <div id="leaderboard-list" class="space-y-4 font-mono uppercase text-sm">
-                        <div class="flex justify-between border-b border-white/5 pb-2"><span>1. J-Bay Legend</span><span class="text-orange-500">2,400</span></div>
-                        <div class="flex justify-between border-b border-white/5 pb-2"><span>2. Anchor Steel</span><span class="text-orange-500">1,850</span></div>
-                    </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -179,160 +185,150 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- CALCULATOR ---
-        function calcSteel() {
-            const density = parseFloat(document.getElementById('matType').value);
-            const l = parseFloat(document.getElementById('matLen').value) || 0;
-            const w = parseFloat(document.getElementById('matWidth').value) || 0;
-            const t = parseFloat(document.getElementById('matThick').value) || 0;
-            const weight = (l * w * (t/1000) * density).toFixed(2);
-            document.getElementById('estResult').innerHTML = weight + ' <span class="text-xl">KG</span>';
+        // --- WHATSAPP LOGIC ---
+        function sendWhatsApp() {
+            const type = document.getElementById('wa_type').value;
+            const dims = document.getElementById('wa_dims').value;
+            const urgency = document.getElementById('wa_urgency').value;
+            const specs = document.getElementById('wa_specs').value;
+            const phone = "27663544654";
+            
+            const message = `*J-BAY WELDERS PROJECT BRIEF*%0A%0A*Type:* ${type}%0A*Dimensions:* ${dims}%0A*Urgency:* ${urgency}%0A*Specs:* ${specs}`;
+            window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
         }
 
-        // --- CLIENT LOGIC ---
-        let currentPlayer = "Guest_Welder";
-        document.getElementById('clientForm').onsubmit = function(e) {
-            e.preventDefault();
-            currentPlayer = document.getElementById('clientName').value;
-            alert(`Welcome ${currentPlayer}!`);
-            document.getElementById('reg-form').innerHTML = `<p class='text-orange-500 font-black italic text-xl uppercase'>Active: ${currentPlayer}</p>`;
-        };
+        // --- PERSISTENT LOGIN & LEADERBOARD ---
+        let user = JSON.parse(localStorage.getItem('jbay_user')) || null;
+        let scores = JSON.parse(localStorage.getItem('jbay_scores')) || [
+            {name: 'Legend', score: 2500},
+            {name: 'Steel-Chief', score: 1800}
+        ];
 
-        function updateLeaderboard(score) {
+        function renderAuth() {
+            const panel = document.getElementById('auth-panel');
+            if (user) {
+                panel.innerHTML = `
+                    <p class="text-[10px] text-slate-500 uppercase tracking-widest font-black mb-1">Active Client</p>
+                    <p class="text-2xl font-black italic text-orange-500 uppercase">${user.name}</p>
+                    <button onclick="logout()" class="mt-4 text-[10px] font-bold uppercase text-slate-400 hover:text-white">Switch Account</button>
+                `;
+            } else {
+                panel.innerHTML = `
+                    <h3 class="text-xl font-black uppercase italic mb-4">Client On-Boarding</h3>
+                    <input type="text" id="regName" placeholder="NAME / COMPANY" class="w-full bg-slate-800 p-4 mb-4 outline-none border border-white/5 font-bold text-sm">
+                    <button onclick="login()" class="w-full bg-orange-600 py-4 font-black uppercase text-xs tracking-widest">Sign In</button>
+                `;
+            }
+            renderLeaderboard();
+        }
+
+        function login() {
+            const name = document.getElementById('regName').value;
+            if (name) {
+                user = { name: name };
+                localStorage.setItem('jbay_user', JSON.stringify(user));
+                renderAuth();
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('jbay_user');
+            user = null;
+            renderAuth();
+        }
+
+        function saveScore(score) {
+            if (!user) return;
+            scores.push({ name: user.name, score: score });
+            scores.sort((a, b) => b.score - a.score);
+            scores = scores.slice(0, 10); // Keep top 10
+            localStorage.setItem('jbay_scores', JSON.stringify(scores));
+            renderLeaderboard();
+        }
+
+        function renderLeaderboard() {
             const list = document.getElementById('leaderboard-list');
-            const entry = document.createElement('div');
-            entry.className = "flex justify-between border-b border-white/5 pb-2 text-white animate-pulse";
-            entry.innerHTML = `<span>${currentPlayer}</span><span class="text-orange-500">${score}</span>`;
-            list.prepend(entry);
+            list.innerHTML = scores.map((s, i) => `
+                <div class="flex justify-between border-b border-white/5 pb-2 ${user && s.name === user.name ? 'text-orange-500 font-bold' : 'text-slate-400'}">
+                    <span>${i+1}. ${s.name}</span>
+                    <span>${s.score}</span>
+                </div>
+            `).join('');
         }
 
-        // --- TETRIS ENGINE ---
+        // --- TETRIS ENGINE (MINIFIED FOR STABILITY) ---
         const canvas = document.getElementById('tetris');
         const context = canvas.getContext('2d');
         context.scale(20, 20);
+        let paused = false, dropInterval = 1000, lastTime = 0, dropCounter = 0;
+        const arena = Array.from({length: 20}, () => Array(12).fill(0));
+        const player = { pos: {x: 0, y: 0}, matrix: null, score: 0 };
 
-        function collide(arena, player) {
-            const [m, o] = [player.matrix, player.pos];
+        function createPiece(t) {
+            const p = {
+                'I':[[0,1,0,0],[0,1,0,0],[0,1,0,0],[0,1,0,0]],
+                'L':[[0,2,0],[0,2,0],[0,2,2]],
+                'O':[[3,3],[3,3]],
+                'T':[[0,4,0],[4,4,4],[0,0,0]]
+            };
+            return p[t] || p['I'];
+        }
+
+        function collide(a, p) {
+            const [m, o] = [p.matrix, p.pos];
             for (let y = 0; y < m.length; ++y) {
                 for (let x = 0; x < m[y].length; ++x) {
-                    if (m[y][x] !== 0 && (arena[y + o.y] && arena[y + o.y][x + o.x]) !== 0) return true;
+                    if (m[y][x] !== 0 && (a[y + o.y] && a[y + o.y][x + o.x]) !== 0) return true;
                 }
             }
             return false;
         }
 
-        function createMatrix(w, h) {
-            const matrix = [];
-            while (h--) matrix.push(new Array(w).fill(0));
-            return matrix;
-        }
-
-        function createPiece(type) {
-            if (type === 'I') return [[0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0]];
-            if (type === 'L') return [[0, 2, 0], [0, 2, 0], [0, 2, 2]];
-            if (type === 'J') return [[0, 3, 0], [0, 3, 0], [3, 3, 0]];
-            if (type === 'O') return [[4, 4], [4, 4]];
-            if (type === 'Z') return [[5, 5, 0], [0, 5, 5], [0, 0, 0]];
-            if (type === 'S') return [[0, 6, 6], [6, 6, 0], [0, 0, 0]];
-            if (type === 'T') return [[0, 7, 0], [7, 7, 7], [0, 0, 0]];
-        }
-
-        function draw() {
-            context.fillStyle = '#000';
-            context.fillRect(0, 0, canvas.width, canvas.height);
-            drawMatrix(arena, {x: 0, y: 0});
-            drawMatrix(player.matrix, player.pos);
-        }
-
-        function drawMatrix(matrix, offset) {
-            matrix.forEach((row, y) => {
-                row.forEach((value, x) => {
-                    if (value !== 0) {
-                        context.fillStyle = ['#f97316', '#38bdf8', '#fbbf24', '#f472b6', '#a855f7', '#4ade80', '#f87171'][value - 1];
-                        context.fillRect(x + offset.x, y + offset.y, 1, 1);
-                    }
-                });
-            });
-        }
-
-        function merge(arena, player) {
-            player.matrix.forEach((row, y) => {
-                row.forEach((value, x) => {
-                    if (value !== 0) arena[y + player.pos.y][x + player.pos.x] = value;
-                });
-            });
-        }
-
         function playerReset() {
-            const pieces = 'ILJOTSZ';
-            player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
+            const pieces = 'ILOT';
+            player.matrix = createPiece(pieces[Math.random() * pieces.length | 0]);
             player.pos.y = 0;
-            player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
+            player.pos.x = 5;
             if (collide(arena, player)) {
                 paused = true;
-                document.getElementById('game-overlay').style.display = 'flex';
+                document.getElementById('game-over').classList.remove('hidden');
                 document.getElementById('final-score').innerText = player.score;
-                updateLeaderboard(player.score);
+                saveScore(player.score);
             }
         }
-
-        function rotate(matrix, dir) {
-            for (let y = 0; y < matrix.length; ++y) {
-                for (let x = 0; x < y; ++x) {
-                    [matrix[x][y], matrix[y][x]] = [matrix[y][x], matrix[x][y]];
-                }
-            }
-            if (dir > 0) matrix.forEach(row => row.reverse());
-            else matrix.reverse();
-        }
-
-        let dropCounter = 0;
-        let dropInterval = 1000;
-        let lastTime = 0;
-        let paused = false;
 
         function update(time = 0) {
             if (paused) return;
-            const deltaTime = time - lastTime;
+            const dt = time - lastTime;
             lastTime = time;
-            dropCounter += deltaTime;
+            dropCounter += dt;
             if (dropCounter > dropInterval) {
                 player.pos.y++;
                 if (collide(arena, player)) {
                     player.pos.y--;
-                    merge(arena, player);
+                    player.matrix.forEach((r,y)=>r.forEach((v,x)=>{if(v) arena[y+player.pos.y][x+player.pos.x]=v}));
                     playerReset();
-                    sweep();
+                    // Simple sweep
+                    outer: for (let y = arena.length - 1; y > 0; --y) {
+                        for (let x = 0; x < arena[y].length; ++x) if (arena[y][x] === 0) continue outer;
+                        arena.splice(y, 1); arena.unshift(new Array(12).fill(0));
+                        player.score += 100;
+                        document.getElementById('score').innerText = player.score;
+                    }
                 }
                 dropCounter = 0;
             }
-            draw();
+            context.fillStyle = '#000'; context.fillRect(0,0,12,20);
+            arena.forEach((r,y)=>r.forEach((v,x)=>{if(v){context.fillStyle='#f97316';context.fillRect(x,y,1,1)}}));
+            player.matrix.forEach((r,y)=>r.forEach((v,x)=>{if(v){context.fillStyle='#f97316';context.fillRect(x+player.pos.x,y+player.pos.y,1,1)}}));
             requestAnimationFrame(update);
         }
 
-        function sweep() {
-            outer: for (let y = arena.length - 1; y > 0; --y) {
-                for (let x = 0; x < arena[y].length; ++x) {
-                    if (arena[y][x] === 0) continue outer;
-                }
-                const row = arena.splice(y, 1)[0].fill(0);
-                arena.unshift(row);
-                player.score += 100;
-                document.getElementById('score').innerText = player.score;
-            }
-        }
-
-        const arena = createMatrix(12, 20);
-        const player = { pos: {x: 0, y: 0}, matrix: null, score: 0 };
-
         function resetGame() {
-            arena.forEach(row => row.fill(0));
-            player.score = 0;
-            document.getElementById('score').innerText = 0;
-            playerReset();
-            paused = false;
-            document.getElementById('game-overlay').style.display = 'none';
-            update();
+            arena.forEach(r => r.fill(0));
+            player.score = 0; document.getElementById('score').innerText = 0;
+            paused = false; document.getElementById('game-over').classList.add('hidden');
+            playerReset(); update();
         }
 
         window.addEventListener('keydown', e => {
@@ -340,8 +336,10 @@
             if (e.keyCode === 37) { player.pos.x--; if(collide(arena, player)) player.pos.x++; }
             if (e.keyCode === 39) { player.pos.x++; if(collide(arena, player)) player.pos.x--; }
             if (e.keyCode === 40) { player.pos.y++; if(collide(arena, player)) player.pos.y--; }
-            if (e.keyCode === 38) { rotate(player.matrix, 1); if(collide(arena, player)) rotate(player.matrix, -1); }
         });
+
+        // Initialize
+        renderAuth();
     </script>
 </body>
 </html>
