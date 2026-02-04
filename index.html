@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J-Bay Welders | Premier Industrial Engineering</title>
+    <title>J-Bay Welders | Industrial Precision Engineering</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
@@ -20,10 +20,8 @@
         /* --- MICROWORKER ANIMATIONS --- */
         @keyframes arc-burn { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1.5); filter: blur(1px); } }
         .arc-flare { animation: arc-burn 0.05s infinite; fill: #60a5fa; }
-        
         @keyframes laser-pulse { 0% { width: 0; opacity: 0; } 50% { width: 80px; opacity: 1; } 100% { width: 80px; opacity: 0; } }
         .laser-beam { animation: laser-pulse 2s infinite; stroke: #ef4444; stroke-width: 1; }
-
         @keyframes hoist { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
         .hoist-action { animation: hoist 3s ease-in-out infinite; }
 
@@ -32,7 +30,7 @@
         canvas { display: block; width: 100%; height: auto; image-rendering: pixelated; }
         .game-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 20; }
 
-        .nav-btn { font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; transition: all 0.3s; padding: 10px 0; border-bottom: 2px solid transparent; }
+        .nav-btn { font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; transition: all 0.3s; padding: 10px 0; border-bottom: 2px solid transparent; color: #94a3b8; }
         .active-tab { color: #f97316 !important; border-bottom: 2px solid #f97316; }
     </style>
 </head>
@@ -44,81 +42,105 @@
         </div>
         <div class="hidden lg:flex gap-10 items-center">
             <button onclick="switchTab('home')" class="nav-btn active-tab" id="btn-home">Portal</button>
-            <button onclick="switchTab('craft')" class="nav-btn" id="btn-craft">The Craft</button>
+            <button onclick="switchTab('tools')" class="nav-btn" id="btn-tools">Precision Tools</button>
+            <button onclick="switchTab('craft')" class="nav-btn" id="btn-craft">Work-Flow</button>
             <button onclick="switchTab('arcade')" class="nav-btn" id="btn-arcade">Arcade</button>
-            <a href="https://wa.me/27663544654" class="bg-orange-600 text-white px-6 py-2 rounded-sm font-black text-[10px] tracking-widest">URGENT BRIEF</a>
+            <a href="tel:+27663544654" class="bg-orange-600 text-white px-6 py-2 rounded-sm font-black text-[10px] tracking-widest uppercase">Direct Line</a>
         </div>
     </nav>
 
     <main id="home" class="tab-content active">
         <section class="hero-gradient h-[85vh] flex items-center px-6 lg:px-24">
             <div class="max-w-4xl">
-                <p class="text-orange-500 font-black tracking-[1em] uppercase text-xs mb-4">Established Excellence</p>
+                <p class="text-orange-500 font-black tracking-[1em] uppercase text-xs mb-4">Industrial Engineering Solutions</p>
                 <h1 class="text-7xl lg:text-[11rem] font-black leading-[0.85] uppercase mb-10 italic">Steel <br><span class="text-orange-600">Force.</span></h1>
-                <p class="text-xl max-w-xl text-slate-300 font-light leading-relaxed border-l-4 border-orange-600 pl-6">Jeffreys Bay's elite structural firm. We specialize in high-tensile security, mirror-finish marine stainless, and corporate engineering.</p>
+                <p class="text-xl max-w-xl text-slate-300 font-light leading-relaxed border-l-4 border-orange-600 pl-6 bg-slate-900/40 py-4 pr-4">Jeffreys Bay's premier choice for structural steel fabrication, security gate reinforcement, and marine-grade stainless steel finishes.</p>
             </div>
         </section>
     </main>
 
-    <main id="craft" class="tab-content py-24 px-6 lg:px-24">
-        <div class="max-w-6xl mx-auto text-center">
-            <h2 class="text-6xl font-black uppercase italic mb-20">The <span class="text-orange-600">Forge</span> Logic</h2>
-            
-            <div class="grid lg:grid-cols-3 gap-8">
-                <div class="bg-slate-900/40 p-8 border border-white/5 rounded-2xl relative overflow-hidden">
-                    <svg viewBox="0 0 200 120" class="w-full h-32 mb-6">
-                        <circle cx="40" cy="80" r="10" fill="#f97316"/> <rect x="35" y="90" width="10" height="20" rx="5" fill="#1e293b"/> <rect x="45" y="85" width="15" height="5" fill="#475569"/>
-                        <line x1="60" y1="87.5" x2="140" y2="87.5" class="laser-beam"/>
-                        <rect x="140" y="50" width="5" height="60" fill="#334155"/> </svg>
-                    <h4 class="font-black text-orange-500 uppercase italic tracking-tighter text-xl">01. Laser Survey</h4>
-                    <p class="text-xs text-slate-400 mt-2 uppercase font-bold tracking-widest">Digital site mapping</p>
+    <main id="tools" class="tab-content py-24 px-6 lg:px-24">
+        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-20">
+            <div>
+                <h2 class="text-5xl font-black uppercase mb-8 italic">Scientific <span class="text-orange-600">Analysis</span></h2>
+                <div class="p-10 bg-slate-900 text-white rounded-lg shadow-2xl space-y-6 border border-white/10">
+                    <div>
+                        <label class="text-[10px] uppercase tracking-widest text-slate-400">Material Profile</label>
+                        <select id="matType" class="w-full bg-slate-800 p-5 outline-none border-l-4 border-orange-600 font-bold mt-2 text-white">
+                            <option value="7850">Mild Steel Plate (7850 kg/m³)</option>
+                            <option value="8000">Stainless Steel 316L (8000 kg/m³)</option>
+                            <option value="2700">Aluminum 6061 (2700 kg/m³)</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4">
+                        <input type="number" id="matLen" placeholder="Length (m)" class="bg-slate-800 p-5 outline-none font-bold text-orange-500 placeholder-slate-500">
+                        <input type="number" id="matWidth" placeholder="Width (m)" class="bg-slate-800 p-5 outline-none font-bold text-orange-500 placeholder-slate-500">
+                        <input type="number" id="matThick" placeholder="Thick (mm)" class="bg-slate-800 p-5 outline-none font-bold text-orange-500 placeholder-slate-500">
+                    </div>
+                    <button onclick="calcSteel()" class="w-full bg-orange-600 py-6 font-black uppercase tracking-[0.3em] hover:bg-white hover:text-orange-600 transition-all">Calculate Mass</button>
+                    <div id="estResult" class="text-center text-6xl font-black text-orange-500 mt-6 tracking-tighter">0.00 <span class="text-xl">KG</span></div>
                 </div>
-
-                <div class="bg-slate-900/40 p-8 border border-white/5 rounded-2xl relative overflow-hidden">
-                    <svg viewBox="0 0 200 120" class="w-full h-32 mb-6">
-                        <circle cx="100" cy="70" r="10" fill="#f97316"/> 
-                        <path d="M90,80 L110,80 L115,110 L85,110 Z" fill="#1e293b"/> <rect x="92" y="65" width="16" height="12" fill="#020617" stroke="#f97316"/> <rect x="60" y="110" width="80" height="4" fill="#64748b"/>
-                        <circle cx="100" cy="110" r="8" class="arc-flare"/>
-                        <circle cx="100" cy="110" r="3" fill="white"/>
-                    </svg>
-                    <h4 class="font-black text-orange-500 uppercase italic tracking-tighter text-xl">02. Arc Fusion</h4>
-                    <p class="text-xs text-slate-400 mt-2 uppercase font-bold tracking-widest">SABS Certified Synthesis</p>
-                </div>
-
-                <div class="bg-slate-900/40 p-8 border border-white/5 rounded-2xl relative overflow-hidden">
-                    <svg viewBox="0 0 200 120" class="w-full h-32 mb-6">
-                        <circle cx="150" cy="90" r="10" fill="#f97316"/>
-                        <rect x="145" y="100" width="10" height="15" fill="#1e293b"/>
-                        <line x1="100" y1="0" x2="100" y2="60" stroke="#475569" stroke-width="2"/>
-                        <g class="hoist-action">
-                            <rect x="50" y="60" width="100" height="12" fill="#f97316"/>
-                            <path d="M50,60 L50,72 L55,72 L55,60 Z" fill="#ea580c"/>
-                        </g>
-                    </svg>
-                    <h4 class="font-black text-orange-500 uppercase italic tracking-tighter text-xl">03. Structural Fit</h4>
-                    <p class="text-xs text-slate-400 mt-2 uppercase font-bold tracking-widest">Heavy-Duty Installation</p>
+            </div>
+            <div class="flex flex-col justify-center">
+                <h2 class="text-4xl font-black uppercase italic mb-4">Mass <span class="text-orange-600">Index</span></h2>
+                <p class="text-slate-400 leading-relaxed mb-8">Professional grade project estimation using industry-standard density physics. Accuracy guaranteed for structural load-bearing assessments.</p>
+                <div class="p-8 bg-white/5 border-r-8 border-orange-600 italic text-sm text-slate-300">
+                    $M = L \times W \times (T/1000) \times \rho$. Engineering precision for every brief.
                 </div>
             </div>
         </div>
     </main>
 
+    <main id="craft" class="tab-content py-24 px-6 lg:px-24 bg-slate-900/30">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-6xl font-black uppercase italic mb-20 text-center">The <span class="text-orange-600">Forge</span> Logic</h2>
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="bg-slate-900/60 p-8 border border-white/5 rounded-2xl relative">
+                    <svg viewBox="0 0 200 120" class="w-full h-32 mb-6">
+                        <circle cx="40" cy="80" r="10" fill="#f97316"/><rect x="35" y="90" width="10" height="20" rx="5" fill="#1e293b"/>
+                        <rect x="45" y="85" width="15" height="5" fill="#475569"/><line x1="60" y1="87.5" x2="140" y2="87.5" class="laser-beam"/>
+                        <rect x="140" y="50" width="5" height="60" fill="#334155"/>
+                    </svg>
+                    <h4 class="font-black text-orange-500 uppercase italic text-xl">01. Measurement</h4>
+                    <p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Digital Site Survey</p>
+                </div>
+                <div class="bg-slate-900/60 p-8 border border-white/5 rounded-2xl relative">
+                    <svg viewBox="0 0 200 120" class="w-full h-32 mb-6">
+                        <circle cx="100" cy="70" r="10" fill="#f97316"/><path d="M90,80 L110,80 L115,110 L85,110 Z" fill="#1e293b"/>
+                        <rect x="92" y="65" width="16" height="12" fill="#020617" stroke="#f97316"/>
+                        <rect x="60" y="110" width="80" height="4" fill="#64748b"/><circle cx="100" cy="110" r="8" class="arc-flare"/><circle cx="100" cy="110" r="3" fill="white"/>
+                    </svg>
+                    <h4 class="font-black text-orange-500 uppercase italic text-xl">02. Fabrication</h4>
+                    <p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">SABS Certified Welding</p>
+                </div>
+                <div class="bg-slate-900/60 p-8 border border-white/5 rounded-2xl relative">
+                    <svg viewBox="0 0 200 120" class="w-full h-32 mb-6">
+                        <circle cx="150" cy="90" r="10" fill="#f97316"/><rect x="145" y="100" width="10" height="15" fill="#1e293b"/>
+                        <line x1="100" y1="0" x2="100" y2="60" stroke="#475569" stroke-width="2"/>
+                        <g class="hoist-action"><rect x="50" y="60" width="100" height="12" fill="#f97316"/></g>
+                    </svg>
+                    <h4 class="font-black text-orange-500 uppercase italic text-xl">03. Installation</h4>
+                    <p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Structural Deployment</p>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+
     <main id="arcade" class="tab-content py-24 px-6 lg:px-24 bg-slate-950 min-h-screen">
         <div class="max-w-7xl mx-auto grid lg:grid-cols-3 gap-12">
-            
             <div class="lg:col-span-1">
-                <div id="reg-form" class="bg-slate-900 p-8 border-l-4 border-orange-600">
-                    <h3 class="text-3xl font-black uppercase italic mb-6">Client <span class="text-orange-600">On-Boarding</span></h3>
-                    <p class="text-xs text-slate-400 mb-6 uppercase tracking-widest">Enter details to join the leaderboard & unlock rewards.</p>
+                <div id="reg-form" class="bg-slate-900 p-8 border-l-4 border-orange-600 shadow-2xl">
+                    <h3 class="text-3xl font-black uppercase italic mb-6">Player <span class="text-orange-600">On-Boarding</span></h3>
                     <form id="clientForm" class="space-y-4">
-                        <input type="text" id="clientName" placeholder="NAME / COMPANY" required class="w-full bg-slate-800 p-4 outline-none border border-white/5 font-bold text-sm text-white">
-                        <input type="email" id="clientEmail" placeholder="EMAIL ADDRESS" required class="w-full bg-slate-800 p-4 outline-none border border-white/5 font-bold text-sm text-white">
-                        <button type="submit" class="w-full bg-orange-600 py-4 font-black uppercase text-xs tracking-[0.2em]">Register for Competition</button>
+                        <input type="text" id="clientName" placeholder="YOUR NAME / COMPANY" required class="w-full bg-slate-800 p-4 outline-none border border-white/5 font-bold text-white text-sm">
+                        <input type="email" id="clientEmail" placeholder="EMAIL ADDRESS" required class="w-full bg-slate-800 p-4 outline-none border border-white/5 font-bold text-white text-sm">
+                        <button type="submit" class="w-full bg-orange-600 py-4 font-black uppercase text-xs tracking-widest">Join Leaderboard</button>
                     </form>
                 </div>
-                
-                <div class="mt-8 p-6 bg-white/5 rounded">
-                    <h4 class="font-black text-orange-500 italic mb-2 text-sm uppercase">Month-End Bonus:</h4>
-                    <p class="text-[11px] text-slate-300 uppercase tracking-widest leading-relaxed">The monthly champion wins a structural safety audit + 5% discount on upcoming fabrications.</p>
+                <div class="mt-8 bg-orange-600 p-6 text-white font-black uppercase italic shadow-2xl text-center">
+                    🏆 TOP MONTHLY PLAYER WINS 5% OFF! 🏆<br>
+                    <span class="text-[10px] block mt-2 opacity-80">Winner chosen every month for a free consultation.</span>
                 </div>
             </div>
 
@@ -126,17 +148,17 @@
                 <div id="tetris-container">
                     <canvas id="tetris" width="240" height="400"></canvas>
                     <div id="game-overlay" class="game-overlay text-center">
-                        <h3 class="text-4xl font-black mb-2 italic">ARC BROKEN</h3>
-                        <p class="text-orange-500 text-xl font-bold mb-6">SCORE: <span id="final-score">0</span></p>
-                        <button onclick="resetGame()" class="bg-orange-600 px-8 py-3 font-black uppercase text-xs hover:bg-white hover:text-orange-600 transition">Restart</button>
+                        <h3 class="text-4xl font-black mb-2 italic uppercase">Arc Broken</h3>
+                        <p class="text-orange-500 text-xl font-bold mb-6">FINAL SCORE: <span id="final-score">0</span></p>
+                        <button onclick="resetGame()" class="bg-orange-600 px-8 py-3 font-black uppercase text-xs">Restart</button>
                     </div>
                 </div>
                 <div class="mt-6 text-4xl font-black italic">SCORE: <span id="score" class="text-orange-600">0</span></div>
             </div>
 
             <div class="lg:col-span-1">
-                <div class="bg-slate-900 p-8 border-r-4 border-orange-600 h-full">
-                    <h3 class="text-2xl font-black uppercase italic mb-8 tracking-widest">Top <span class="text-orange-600">Steelworkers</span></h3>
+                <div class="bg-slate-900 p-8 border-r-4 border-orange-600 h-full shadow-2xl">
+                    <h3 class="text-2xl font-black uppercase italic mb-8 tracking-widest">Top <span class="text-orange-600">Stackers</span></h3>
                     <div id="leaderboard-list" class="space-y-4 font-mono uppercase text-sm">
                         <div class="flex justify-between border-b border-white/5 pb-2"><span>1. J-Bay Legend</span><span class="text-orange-500">2,400</span></div>
                         <div class="flex justify-between border-b border-white/5 pb-2"><span>2. Anchor Steel</span><span class="text-orange-500">1,850</span></div>
@@ -157,19 +179,29 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // --- CALCULATOR ---
+        function calcSteel() {
+            const density = parseFloat(document.getElementById('matType').value);
+            const l = parseFloat(document.getElementById('matLen').value) || 0;
+            const w = parseFloat(document.getElementById('matWidth').value) || 0;
+            const t = parseFloat(document.getElementById('matThick').value) || 0;
+            const weight = (l * w * (t/1000) * density).toFixed(2);
+            document.getElementById('estResult').innerHTML = weight + ' <span class="text-xl">KG</span>';
+        }
+
         // --- CLIENT LOGIC ---
         let currentPlayer = "Guest_Welder";
         document.getElementById('clientForm').onsubmit = function(e) {
             e.preventDefault();
             currentPlayer = document.getElementById('clientName').value;
-            alert(`Welcome ${currentPlayer}! Your session is locked.`);
-            document.getElementById('reg-form').innerHTML = `<p class='text-orange-500 font-black italic text-xl uppercase'>Client: ${currentPlayer}</p><p class='text-slate-500 text-[10px] mt-2 font-bold'>OFFICIAL COMPETITOR</p>`;
+            alert(`Welcome ${currentPlayer}!`);
+            document.getElementById('reg-form').innerHTML = `<p class='text-orange-500 font-black italic text-xl uppercase'>Active: ${currentPlayer}</p>`;
         };
 
         function updateLeaderboard(score) {
             const list = document.getElementById('leaderboard-list');
             const entry = document.createElement('div');
-            entry.className = "flex justify-between border-b border-white/5 pb-2 text-white";
+            entry.className = "flex justify-between border-b border-white/5 pb-2 text-white animate-pulse";
             entry.innerHTML = `<span>${currentPlayer}</span><span class="text-orange-500">${score}</span>`;
             list.prepend(entry);
         }
