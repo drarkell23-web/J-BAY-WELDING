@@ -7,216 +7,133 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Outfit', sans-serif; background-color: #020617; color: #f8fafc; margin: 0; overflow-x: hidden; touch-action: manipulation; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        body { font-family: 'Outfit', sans-serif; background-color: #020617; color: #f8fafc; margin: 0; overflow-x: hidden; }
         
-        .text-industrial-orange { color: #f97316; }
-        .bg-industrial-orange { background-color: #f97316; }
-        .border-industrial-orange { border-color: #f97316; }
+        /* Sticky Header Fix */
+        header.main-nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(2, 6, 23, 0.98); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .content-wrapper { pt-32 lg:pt-24; } /* Padding to prevent content from hiding under header */
 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        .nav-link { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #64748b; transition: 0.4s; cursor: pointer; white-space: nowrap; }
-        .active-tab { color: #f97316 !important; border-bottom: 2px solid #f97316; padding-bottom: 4px; }
-
-        .glass-card { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; }
+        .tab-content { display: none; padding-top: 100px; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease-in; }
         
-        /* Key Cluster UI */
-        .key-cluster { display: grid; grid-template-areas: ". up ." "left down right"; gap: 8px; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .nav-link { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #64748b; transition: 0.3s; cursor: pointer; }
+        .active-tab { color: #f97316 !important; border-bottom: 2px solid #f97316; }
+
+        .glass-card { background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; }
+        
+        /* Arcade Control - Prevent Scrolling */
+        #arcade { touch-action: none; overflow: hidden; height: 100vh; }
+        
+        .key-cluster { display: grid; grid-template-areas: ". up ." "left down right"; gap: 10px; }
         .key-btn { 
-            background: #1e293b; border-bottom: 5px solid #000; border-radius: 10px; 
-            width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; 
-            font-size: 22px; color: white; transition: all 0.1s; user-select: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            background: #1e293b; border-bottom: 4px solid #000; border-radius: 8px; 
+            width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; 
+            font-size: 24px; color: white; transition: 0.1s; user-select: none;
         }
-        .key-btn:active { transform: translateY(3px); border-bottom-width: 2px; background: #f97316; }
+        .key-btn:active { transform: translateY(2px); border-bottom-width: 1px; background: #f97316; }
 
-        canvas { background: #000; border: 4px solid #1e293b; border-radius: 8px; }
-        .next-preview { background: #000; border: 2px solid #1e293b; border-radius: 4px; }
+        /* Original Game Aesthetics */
+        canvas#tetris { 
+            background: #000; 
+            border: 4px solid #334155; 
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            background-image: linear-gradient(rgba(255, 255, 255, .05) 1px, transparent 1px),
+                              linear-gradient(90(rgba(255, 255, 255, .05) 1px, transparent 1px));
+            background-size: 20px 20px;
+        }
         
         input, select, textarea { background: #0f172a !important; border: 1px solid rgba(255,255,255,0.1) !important; color: white !important; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body>
 
-    <nav class="sticky top-0 z-[1000] px-6 py-6 flex flex-col lg:flex-row justify-between items-center bg-slate-950/95 border-b border-white/5">
-        <div class="flex items-center gap-4 mb-6 lg:mb-0">
-            <div class="text-2xl font-black tracking-tighter uppercase italic leading-none">J-BAY <br><span class="text-industrial-orange">WELDERS</span></div>
-            <div class="h-10 w-[1px] bg-white/10 hidden lg:block"></div>
-            <div class="text-[9px] font-bold text-slate-500 uppercase tracking-[0.2em] hidden lg:block">Specialist Structural <br>& Precision Engineering</div>
+    <header class="main-nav px-6 py-4 flex flex-col lg:flex-row justify-between items-center">
+        <div class="flex items-center gap-4 mb-4 lg:mb-0">
+            <div class="text-xl font-black tracking-tighter uppercase italic leading-none">J-BAY <span class="text-industrial-orange">WELDERS</span></div>
+            <div class="h-6 w-[1px] bg-white/20 hidden lg:block"></div>
+            <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest hidden lg:block">Structural Precision</div>
         </div>
-        <div class="flex gap-8 overflow-x-auto w-full lg:w-auto pb-2 justify-center no-scrollbar">
-            <div onclick="switchTab('home')" class="nav-link active-tab" id="btn-home">Executive</div>
+        <div class="flex gap-6">
+            <div onclick="switchTab('home')" class="nav-link active-tab" id="btn-home">Shop</div>
             <div onclick="switchTab('knowledge')" class="nav-link" id="btn-knowledge">Intelligence</div>
-            <div onclick="switchTab('whatsapp')" class="nav-link" id="btn-whatsapp">Projects</div>
+            <div onclick="switchTab('whatsapp')" class="nav-link" id="btn-whatsapp">Quote</div>
             <div onclick="switchTab('arcade')" class="nav-link" id="btn-arcade">Arcade</div>
         </div>
-    </nav>
+    </header>
 
-    <main id="home" class="tab-content active">
-        <section class="min-h-[70vh] flex flex-col justify-center px-6 lg:px-24 py-16">
-            <span class="text-industrial-orange font-black text-xs uppercase tracking-[0.4em] mb-4">Quality Controlled Workshop</span>
-            <h1 class="text-5xl lg:text-8xl font-black uppercase italic leading-[0.85] mb-8">Forging <br><span class="text-industrial-orange">Integrity.</span></h1>
-            <p class="max-w-2xl text-slate-400 text-lg mb-12 leading-relaxed">Based in Jeffrey's Bay, we bridge the gap between small-shop agility and large-scale engineering precision. We specialize in SABS-compliant structural steelwork, custom fabrication, and coded welding for the Eastern Cape's most demanding environments.</p>
-            
-            <div class="grid lg:grid-cols-3 gap-6 max-w-5xl">
-                <div class="glass-card p-8">
-                    <h3 class="text-xl font-bold uppercase italic text-industrial-orange mb-3">Structural Steel</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">From mezzanine floors to portal frames, we engineer structures that exceed SANS 10162 standards.</p>
+    <main id="home" class="tab-content active px-6">
+        <div class="max-w-4xl mx-auto py-12">
+            <h1 class="text-6xl font-black uppercase italic mb-6 leading-none">Coded <br><span class="text-industrial-orange">Craftsmanship.</span></h1>
+            <p class="text-slate-400 text-lg mb-8 max-w-2xl">High-spec fabrication delivered from our J-Bay workshop. We don't just weld; we engineer solutions for the toughest marine and structural requirements in the Eastern Cape.</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="glass-card p-6 border-l-4 border-industrial-orange">
+                    <h3 class="font-bold uppercase text-sm mb-2">Our Standards</h3>
+                    <p class="text-xs text-slate-400">All structural work follows SANS 10162. Our welders are coded for MIG, TIG, and Arc applications across various alloys.</p>
                 </div>
-                <div class="glass-card p-8">
-                    <h3 class="text-xl font-bold uppercase italic text-industrial-orange mb-3">Marine Spec</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Grade 316 Stainless Steel fabrication designed to withstand the corrosive C5-M marine environment of our coast.</p>
-                </div>
-                <div class="glass-card p-8">
-                    <h3 class="text-xl font-bold uppercase italic text-industrial-orange mb-3">Coded Welding</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Precision fusion in Mild Steel, Stainless, and Aluminum. Quality tested for high-pressure and load-bearing applications.</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <main id="knowledge" class="tab-content py-16 px-6 lg:px-24">
-        <h2 class="text-4xl font-black uppercase italic mb-4">Technical <span class="text-industrial-orange">Intelligence</span></h2>
-        <p class="text-slate-500 mb-12 uppercase tracking-widest text-xs font-bold">Educational resources for contractors & clients</p>
-
-        <div class="grid lg:grid-cols-2 gap-12">
-            <div class="space-y-8">
-                <div class="glass-card p-8 border-l-4 border-industrial-orange">
-                    <h4 class="text-white font-black uppercase mb-4 tracking-tighter">I. Metallurgy & Corrosion Control</h4>
-                    <p class="text-sm text-slate-400 leading-relaxed mb-4">In coastal regions like J-Bay, "Tea Staining" on stainless steel is a common failure. This occurs when the passive layer of the steel is compromised. We recommend <strong>Electro-Polishing</strong> or <strong>Passivation</strong> for all sea-front installations to ensure longevity.</p>
-                    <div class="bg-black/30 p-4 rounded text-[11px] font-mono text-industrial-orange border border-industrial-orange/20">
-                        TIP: Grade 304 (18% Cr, 8% Ni) vs Grade 316 (16% Cr, 10% Ni, 2% Mo). The Molybdenum in 316 is what stops the sea air from eating your metal.
-                    </div>
-                </div>
-                
-                <div class="glass-card p-8 border-l-4 border-slate-700">
-                    <h4 class="text-white font-black uppercase mb-4 tracking-tighter">II. The Load-Bearing Standard</h4>
-                    <p class="text-sm text-slate-400 leading-relaxed">Structural integrity isn't just about the thickness of the beam; it's about the <strong>Heat Affected Zone (HAZ)</strong> of the weld. Excessive heat during welding can "anneal" the surrounding steel, making it brittle. Our coded welders use multi-pass techniques to manage thermal input.</p>
-                </div>
-            </div>
-
-            <div class="space-y-6">
-                <h3 class="text-xl font-black uppercase italic text-industrial-orange">Quick Maintenance Checklist</h3>
-                <div class="space-y-4">
-                    <div class="flex items-center gap-4 border-b border-white/5 pb-4">
-                        <div class="h-8 w-8 rounded-full bg-industrial-orange flex items-center justify-center font-black text-xs">01</div>
-                        <p class="text-xs text-slate-300">Inspect welds for hairline fractures or "crevice corrosion" every 12 months in coastal zones.</p>
-                    </div>
-                    <div class="flex items-center gap-4 border-b border-white/5 pb-4">
-                        <div class="h-8 w-8 rounded-full bg-industrial-orange flex items-center justify-center font-black text-xs">02</div>
-                        <p class="text-xs text-slate-300">Ensure Hot-Dip Galvanizing meets SANS 121 / ISO 1461 thickness requirements (min 85 microns).</p>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <div class="h-8 w-8 rounded-full bg-industrial-orange flex items-center justify-center font-black text-xs">03</div>
-                        <p class="text-xs text-slate-300">Wash stainless steel structures with fresh water monthly to remove salt crystal buildup.</p>
-                    </div>
-                </div>
-                <div class="mt-10 p-6 bg-slate-900 rounded-xl border border-white/5">
-                    <h4 class="text-[10px] font-black text-slate-500 uppercase mb-4">Workshop Stats</h4>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div><p class="text-2xl font-black italic">S355JR</p><p class="text-[8px] uppercase text-slate-500">Structural Grade Steel</p></div>
-                        <div><p class="text-2xl font-black italic">100%</p><p class="text-[8px] uppercase text-slate-500">Penetration Testing</p></div>
-                    </div>
+                <div class="glass-card p-6">
+                    <h3 class="font-bold uppercase text-sm mb-2">Facility Focus</h3>
+                    <p class="text-xs text-slate-400">Equipped for precision cutting, bending, and assembly. Specializing in Grade 316 Stainless for beachfront properties.</p>
                 </div>
             </div>
         </div>
     </main>
 
-    <main id="whatsapp" class="tab-content py-16 px-6">
-        <div class="max-w-3xl mx-auto glass-card p-8 lg:p-16">
-            <h2 class="text-4xl font-black uppercase italic mb-2">Project <span class="text-industrial-orange">Brief</span></h2>
-            <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-12">Submit technical requirements for a formal estimate</p>
-            
-            <form onsubmit="event.preventDefault(); sendWhatsApp();" class="space-y-8">
-                <div class="grid lg:grid-cols-2 gap-8">
-                    <div class="space-y-2">
-                        <label class="text-[10px] font-black uppercase text-slate-500">Client / Organization</label>
-                        <input type="text" id="wa_name" required class="w-full p-5 rounded-xl outline-none border border-white/10 focus:border-industrial-orange">
-                    </div>
-                    <div class="space-y-2">
-                        <label class="text-[10px] font-black uppercase text-slate-500">Project Type</label>
-                        <select id="wa_type" class="w-full p-5 rounded-xl outline-none border border-white/10 focus:border-industrial-orange">
-                            <option>Structural Fabrication</option>
-                            <option>Marine/Coastal Stainless</option>
-                            <option>Precision Pipework</option>
-                            <option>Agricultural Infrastructure</option>
-                            <option>Security / Balustrades</option>
-                        </select>
-                    </div>
+    <main id="knowledge" class="tab-content px-6">
+        <div class="max-w-4xl mx-auto py-12">
+            <h2 class="text-3xl font-black uppercase italic mb-8">Structural <span class="text-industrial-orange">Insights</span></h2>
+            <div class="grid gap-8">
+                <div class="glass-card p-8">
+                    <h4 class="text-industrial-orange font-bold uppercase mb-4">The Marine Environment (C5-M)</h4>
+                    <p class="text-sm text-slate-300 leading-relaxed mb-4">J-Bay sits in a C5-M corrosive zone. Standard mild steel will fail within 12-24 months without high-specification protection. We utilize Hot-Dip Galvanizing (ISO 1461) and Duplex Stainless Steel for critical load-bearing structures.</p>
+                    
+                    <p class="text-xs text-slate-500 italic mt-4">Educational Tip: Always verify the micron thickness of your galvanizing. For coastal work, anything less than 85 microns is a liability.</p>
                 </div>
+            </div>
+        </div>
+    </main>
 
-                <div class="grid lg:grid-cols-2 gap-8">
-                    <div class="space-y-2">
-                        <label class="text-[10px] font-black uppercase text-slate-500">Site Location (Region)</label>
-                        <input type="text" id="wa_loc" placeholder="e.g. St Francis Bay, J-Bay, PE" class="w-full p-5 rounded-xl">
-                    </div>
-                    <div class="space-y-2">
-                        <label class="text-[10px] font-black uppercase text-slate-500">Urgency Level</label>
-                        <select id="wa_time" class="w-full p-5 rounded-xl">
-                            <option>Emergency Repair (48hrs)</option>
-                            <option>Standard Procurement</option>
-                            <option>Tender / Long-term Planning</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="space-y-2">
-                    <label class="text-[10px] font-black uppercase text-slate-500">Technical Specifications (Dimensions, Material Grade, Coatings)</label>
-                    <textarea id="wa_specs" placeholder="Detail the SABS requirements or project scale..." class="w-full p-5 rounded-xl h-40 outline-none"></textarea>
-                </div>
-
-                <div class="bg-slate-900/80 p-6 rounded-xl border border-industrial-orange/20 flex gap-4">
-                    <input type="checkbox" id="popi" required class="w-6 h-6 mt-1 cursor-pointer accent-industrial-orange">
-                    <label for="popi" class="text-[11px] text-slate-400 leading-relaxed">
-                        <strong class="text-white block mb-1">POPI ACT COMPLIANCE:</strong>
-                        I consent to J-Bay Welders storing my contact info and project specs solely for the purpose of technical quoting and project management. 
-                    </label>
-                </div>
-
-                <button type="submit" class="w-full bg-industrial-orange py-6 font-black uppercase text-white tracking-[0.4em] shadow-2xl hover:bg-white hover:text-orange-600 transition-all duration-300 rounded-xl">Initialize Quote Process</button>
+    <main id="whatsapp" class="tab-content px-6">
+        <div class="max-w-xl mx-auto glass-card p-8">
+            <h2 class="text-2xl font-black uppercase italic mb-6">Technical Manifest</h2>
+            <form onsubmit="event.preventDefault(); sendWhatsApp();" class="space-y-4">
+                <input type="text" id="wa_name" placeholder="Client Name / Company" required class="w-full p-4 rounded-lg">
+                <select id="wa_type" class="w-full p-4 rounded-lg">
+                    <option>Structural Steel (Portal Frames/Mezzanines)</option>
+                    <option>Marine Fabrication (Grade 316 Stainless)</option>
+                    <option>Architectural Gates & Balustrades</option>
+                    <option>Agricultural Equipment Repair</option>
+                </select>
+                <textarea id="wa_specs" placeholder="Technical requirements (Dimensions, material specs...)" class="w-full p-4 rounded-lg h-32"></textarea>
+                <button type="submit" class="w-full bg-industrial-orange py-4 font-black uppercase text-white tracking-widest">Submit to Workshop</button>
             </form>
         </div>
     </main>
 
-    <main id="arcade" class="tab-content py-8 px-4">
-        <div class="flex flex-col items-center max-w-md mx-auto">
-            
-            <div class="flex gap-2 mb-6 bg-slate-900 p-1 rounded-xl border border-white/10 w-full">
-                <button onclick="setDifficulty(1000, this)" class="flex-1 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest bg-industrial-orange text-white">Easy</button>
-                <button onclick="setDifficulty(500, this)" class="flex-1 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest text-slate-500">Medium</button>
-                <button onclick="setDifficulty(200, this)" class="flex-1 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest text-slate-500">Hard</button>
+    <main id="arcade" class="tab-content">
+        <div class="flex flex-col items-center pt-4">
+            <div class="flex gap-4 mb-4">
+                <button onclick="setDifficulty(1000, this)" class="px-4 py-2 text-[10px] font-black uppercase border border-industrial-orange bg-industrial-orange">Easy</button>
+                <button onclick="setDifficulty(500, this)" class="px-4 py-2 text-[10px] font-black uppercase border border-slate-700 text-slate-500">Medium</button>
+                <button onclick="setDifficulty(200, this)" class="px-4 py-2 text-[10px] font-black uppercase border border-slate-700 text-slate-500">Hard</button>
             </div>
 
-            <div class="flex gap-4">
-                <div class="relative">
-                    <canvas id="tetris" width="240" height="400"></canvas>
-                    <div id="game-over" class="absolute inset-0 bg-black/80 flex items-center justify-center hidden">
-                        <div class="text-center">
-                            <p class="text-2xl font-black text-industrial-orange italic mb-4 uppercase">Structural Failure</p>
-                            <button onclick="resetGame()" class="bg-white text-black px-4 py-2 text-[10px] font-black uppercase">Rebuild</button>
-                        </div>
+            <div class="flex gap-4 p-4 glass-card">
+                <canvas id="tetris" width="240" height="400"></canvas>
+                <div class="flex flex-col gap-4">
+                    <div class="text-center">
+                        <p class="text-[9px] font-bold text-slate-500 uppercase">Next Piece</p>
+                        <canvas id="next" width="80" height="80" class="border border-slate-800 bg-black mt-2"></canvas>
                     </div>
-                </div>
-                
-                <div class="flex flex-col gap-4 w-24">
-                    <div class="glass-card p-3 text-center">
-                        <p class="text-[8px] font-bold text-slate-500 uppercase">Next</p>
-                        <canvas id="next" width="80" height="80" class="next-preview mt-2"></canvas>
-                    </div>
-                    <div class="glass-card p-3 text-center">
-                        <p class="text-[8px] font-bold text-slate-500 uppercase">Tonnage</p>
-                        <p id="score" class="text-xl font-black text-industrial-orange italic">0</p>
-                    </div>
-                    <div class="glass-card p-3 text-center">
-                        <p class="text-[8px] font-bold text-slate-500 uppercase">Level</p>
-                        <p id="level" class="text-xl font-black text-white italic">1</p>
+                    <div class="text-center">
+                        <p class="text-[9px] font-bold text-slate-500 uppercase">Tonnage</p>
+                        <p id="score" class="text-2xl font-black text-industrial-orange">0</p>
                     </div>
                 </div>
             </div>
 
-            <div class="key-cluster mt-12">
+            <div class="key-cluster mt-8 mb-20">
                 <div style="grid-area: up" class="key-btn" onclick="handleMove('up')">↻</div>
                 <div style="grid-area: left" class="key-btn" onclick="handleMove('left')">←</div>
                 <div style="grid-area: down" class="key-btn" onclick="handleMove('down')">↓</div>
@@ -231,17 +148,16 @@
             document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active-tab'));
             document.getElementById(id).classList.add('active');
             document.getElementById('btn-' + id).classList.add('active-tab');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function sendWhatsApp() {
             const name = document.getElementById('wa_name').value;
             const type = document.getElementById('wa_type').value;
-            const msg = `*J-BAY WELDERS PROJECT BRIEF*%0A*Client:* ${name}%0A*Job:* ${type}`;
+            const msg = `*J-BAY WELDERS BRIEF*%0A*Client:* ${name}%0A*Job:* ${type}`;
             window.open(`https://wa.me/27663544654?text=${msg}`, '_blank');
         }
 
-        // --- AUTHENTIC TETRIS ENGINE ---
+        // --- RETRO TETRIS ENGINE ---
         const canvas = document.getElementById('tetris');
         const context = canvas.getContext('2d');
         const nextCanvas = document.getElementById('next');
@@ -259,10 +175,11 @@
             'S': [[0,6,6],[6,6,0],[0,0,0]],
             'Z': [[7,7,0],[0,7,7],[0,0,0]]
         };
+        // Original Game Boy / NES inspired colors
         const COLORS = [null, '#00f0f0', '#f97316', '#3b82f6', '#eab308', '#a855f7', '#22c55e', '#ef4444'];
 
         let arena = Array.from({length: 20}, () => Array(12).fill(0));
-        let player = { pos: {x: 0, y: 0}, matrix: null, next: null, score: 0, level: 1 };
+        let player = { pos: {x: 0, y: 0}, matrix: null, next: null, score: 0 };
         let dropInterval = 1000;
         let dropCounter = 0;
         let lastTime = 0;
@@ -270,8 +187,8 @@
         function setDifficulty(speed, btn) {
             dropInterval = speed;
             const btns = btn.parentElement.children;
-            for(let b of btns) { b.classList.remove('bg-industrial-orange', 'text-white'); b.classList.add('text-slate-500'); }
-            btn.classList.add('bg-industrial-orange', 'text-white');
+            for(let b of btns) { b.className = "px-4 py-2 text-[10px] font-black uppercase border border-slate-700 text-slate-500"; }
+            btn.className = "px-4 py-2 text-[10px] font-black uppercase border border-industrial-orange bg-industrial-orange text-white";
             resetGame();
         }
 
@@ -293,11 +210,11 @@
             });
         }
 
-        function rotate(matrix, dir) {
+        function rotate(matrix) {
             for (let y = 0; y < matrix.length; ++y) {
                 for (let x = 0; x < y; ++x) [matrix[x][y], matrix[y][x]] = [matrix[y][x], matrix[x][y]];
             }
-            if (dir > 0) matrix.forEach(row => row.reverse()); else matrix.reverse();
+            matrix.forEach(row => row.reverse());
         }
 
         function playerReset() {
@@ -307,11 +224,7 @@
             player.next = PIECES[pieces[pieces.length * Math.random() | 0]];
             player.pos.y = 0;
             player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
-            
-            if (collide(arena, player)) {
-                document.getElementById('game-over').classList.remove('hidden');
-                arena.forEach(row => row.fill(0));
-            }
+            if (collide(arena, player)) arena.forEach(row => row.fill(0));
             drawNext();
         }
 
@@ -327,49 +240,27 @@
         }
 
         function arenaSweep() {
-            let rowCount = 1;
             outer: for (let y = arena.length - 1; y > 0; --y) {
                 for (let x = 0; x < arena[y].length; ++x) {
                     if (arena[y][x] === 0) continue outer;
                 }
                 const row = arena.splice(y, 1)[0].fill(0);
                 arena.unshift(row);
-                ++y;
-                player.score += rowCount * 10;
-                rowCount *= 2;
-                if(player.score > player.level * 100) player.level++;
+                player.score += 10;
+                y++;
             }
-            updateScore();
+            document.getElementById('score').innerText = player.score;
         }
 
         function handleMove(dir) {
-            if (dir === 'left') {
-                player.pos.x--;
-                if (collide(arena, player)) player.pos.x++;
-            } else if (dir === 'right') {
-                player.pos.x++;
-                if (collide(arena, player)) player.pos.x--;
-            } else if (dir === 'down') {
-                playerDrop();
-            } else if (dir === 'up') {
+            if (dir === 'left') { player.pos.x--; if (collide(arena, player)) player.pos.x++; }
+            if (dir === 'right') { player.pos.x++; if (collide(arena, player)) player.pos.x--; }
+            if (dir === 'down') playerDrop();
+            if (dir === 'up') {
                 const pos = player.pos.x;
-                let offset = 1;
-                rotate(player.matrix, 1);
-                while (collide(arena, player)) {
-                    player.pos.x += offset;
-                    offset = -(offset + (offset > 0 ? 1 : -1));
-                    if (offset > player.matrix[0].length) {
-                        rotate(player.matrix, -1);
-                        player.pos.x = pos;
-                        return;
-                    }
-                }
+                rotate(player.matrix);
+                if (collide(arena, player)) player.pos.x = pos; // Basic kick
             }
-        }
-
-        function updateScore() {
-            document.getElementById('score').innerText = player.score;
-            document.getElementById('level').innerText = player.level;
         }
 
         function drawNext() {
@@ -388,20 +279,6 @@
         function draw() {
             context.fillStyle = '#000';
             context.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Ghost Piece
-            const ghost = { pos: {x: player.pos.x, y: player.pos.y}, matrix: player.matrix };
-            while(!collide(arena, ghost)) { ghost.pos.y++; }
-            ghost.pos.y--;
-            ghost.matrix.forEach((row, y) => {
-                row.forEach((value, x) => {
-                    if (value !== 0) {
-                        context.fillStyle = 'rgba(255,255,255,0.05)';
-                        context.fillRect(x + ghost.pos.x, y + ghost.pos.y, 1, 1);
-                    }
-                });
-            });
-
             drawMatrix(arena, {x: 0, y: 0});
             drawMatrix(player.matrix, player.pos);
         }
@@ -412,6 +289,9 @@
                     if (value !== 0) {
                         context.fillStyle = COLORS[value];
                         context.fillRect(x + offset.x, y + offset.y, 1, 1);
+                        context.strokeStyle = 'rgba(0,0,0,0.5)';
+                        context.lineWidth = 0.05;
+                        context.strokeRect(x + offset.x, y + offset.y, 1, 1);
                     }
                 });
             });
@@ -421,29 +301,31 @@
             const deltaTime = time - lastTime;
             lastTime = time;
             dropCounter += deltaTime;
-            if (dropCounter > (dropInterval / player.level)) playerDrop();
+            if (dropCounter > dropInterval) playerDrop();
             draw();
             requestAnimationFrame(update);
         }
 
+        // Global Key Listener with "Scroll Block"
         document.addEventListener('keydown', event => {
-            if (event.keyCode === 37) handleMove('left');
-            else if (event.keyCode === 39) handleMove('right');
-            else if (event.keyCode === 40) handleMove('down');
-            else if (event.keyCode === 38) handleMove('up');
+            const keys = [37, 38, 39, 40];
+            if (keys.includes(event.keyCode)) {
+                event.preventDefault(); // This stops the screen from moving
+                if (event.keyCode === 37) handleMove('left');
+                else if (event.keyCode === 39) handleMove('right');
+                else if (event.keyCode === 40) handleMove('down');
+                else if (event.keyCode === 38) handleMove('up');
+            }
         });
 
         function resetGame() {
-            document.getElementById('game-over').classList.add('hidden');
             arena.forEach(row => row.fill(0));
             player.score = 0;
-            player.level = 1;
             playerReset();
-            updateScore();
+            document.getElementById('score').innerText = '0';
         }
 
         playerReset();
-        updateScore();
         update();
     </script>
 </body>
