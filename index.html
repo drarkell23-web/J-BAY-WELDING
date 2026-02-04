@@ -3,278 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J-Bay Welders | Industrial Engineering & Fabrication</title>
+    <title>J-Bay Welders | Industrial Engineering Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        /* --- CORE ARCHITECTURE --- */
-        body { font-family: 'Outfit', sans-serif; scroll-behavior: smooth; overflow-x: hidden; background-color: #f8fafc; }
+        body { font-family: 'Outfit', sans-serif; scroll-behavior: smooth; overflow-x: hidden; background-color: #f1f5f9; }
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         
-        /* --- VISUALS & LAYERS --- */
+        /* --- DYNAMIC HERO --- */
         .hero-gradient { 
             background: linear-gradient(90deg, #0f172a 45%, rgba(15, 23, 42, 0.3) 100%), 
-            url('https://maps.app.goo.gl/8nmf9ZHkB5B59Bya9'),
-            url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=1920'); /* Fallback */
+            url('https://maps.app.goo.gl/8nmf9ZHkB5B59Bya9'), url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=1920'); 
             background-size: cover; background-position: center;
         }
-        .glass-nav { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px); border-bottom: 1px solid #e2e8f0; }
-        .orange-glow:hover { box-shadow: 0 0 40px rgba(234, 88, 12, 0.6); }
-        
-        /* --- ANIMATED WELDING STICK LOGO --- */
-        @keyframes arc-spark {
-            0%, 100% { opacity: 0; transform: scale(0.4) rotate(0deg); }
-            50% { opacity: 1; transform: scale(1.5) rotate(15deg); }
-        }
+
+        /* --- LOGO ANIMATION --- */
+        @keyframes arc-spark { 0%, 100% { opacity: 0; transform: scale(0.4); } 50% { opacity: 1; transform: scale(1.6); } }
         .spark-flash { animation: arc-spark 0.08s infinite linear; }
-        
         @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* --- IMAGE HANDLING --- */
-        .image-frame { 
-            position: relative; 
-            overflow: hidden; 
-            background-color: #0f172a; 
-            border-radius: 4px; 
-            height: 350px;
-        }
-        .image-frame img { 
-            transition: all 0.7s ease; 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-        }
-        .image-frame:hover img { transform: scale(1.1); filter: brightness(1.2); }
 
-        /* --- BOT & BUTTONS --- */
-        #assistant-panel { display: none; transition: all 0.3s ease; }
-        #assistant-panel.active { display: flex; animation: slideUp 0.3s ease; }
-        
-        .floating-call {
-            position: fixed;
-            bottom: 110px;
-            right: 32px;
-            background: #22c55e;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 50px;
-            font-weight: 900;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            z-index: 2500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            animation: pulse 2s infinite;
-        }
+        /* --- ARCADE GAME STYLING --- */
+        #game-canvas { background: #020617; border: 4px solid #f97316; cursor: crosshair; box-shadow: 0 0 30px rgba(249, 115, 22, 0.3); }
+        .game-over { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; display: none; background: rgba(0,0,0,0.9); padding: 2rem; border-radius: 10px; width: 80%; }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
+        /* --- UI COMPONENTS --- */
+        .glass-nav { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px); border-bottom: 2px solid #e2e8f0; }
+        .image-frame { position: relative; overflow: hidden; background-color: #0f172a; border-radius: 4px; height: 400px; border: 1px solid #334155; }
+        .image-frame img { transition: all 0.7s ease; width: 100%; height: 100%; object-fit: cover; }
+        .stat-card { border-left: 4px solid #f97316; background: white; padding: 1.5rem; transition: transform 0.3s; }
+        .stat-card:hover { transform: translateY(-5px); }
     </style>
 </head>
 <body class="text-slate-900">
 
-    <div class="bg-slate-900 text-white text-[9px] font-black uppercase tracking-[0.4em] py-2.5 text-center px-4">
-        Engineering Excellence | Kouga Region | Direct: +27 66 354 4654
-    </div>
-
-    <nav class="glass-nav sticky top-0 z-[1000] px-6 lg:px-16 py-4 flex justify-between items-center shadow-sm">
+    <nav class="glass-nav sticky top-0 z-[1000] px-6 lg:px-16 py-4 flex justify-between items-center shadow-lg">
         <div class="flex items-center gap-4">
-            <div class="relative group cursor-pointer">
-                <svg width="55" height="55" viewBox="0 0 100 100">
-                    <rect x="25" y="70" width="12" height="25" rx="2" fill="#1e293b"/> 
-                    <rect x="29" y="15" width="4" height="55" fill="#cbd5e1"/> 
-                    <rect x="29" y="10" width="4" height="6" fill="#f97316"/> 
-                    <g class="spark-flash">
-                        <path d="M31 10 L10 0 M31 10 L50 0 M31 10 L60 15" stroke="#fbbf24" stroke-width="2"/>
-                        <circle cx="31" cy="10" r="5" fill="#fff"/>
-                    </g>
-                </svg>
-                <div class="absolute -right-36 top-1 text-2xl font-black tracking-tighter uppercase leading-none">
-                    J-BAY <br><span class="text-orange-600">WELDERS</span>
-                </div>
-            </div>
+            <svg width="55" height="55" viewBox="0 0 100 100">
+                <rect x="25" y="70" width="12" height="25" rx="2" fill="#1e293b"/> 
+                <rect x="29" y="15" width="4" height="55" fill="#cbd5e1"/> 
+                <rect x="29" y="10" width="4" height="6" fill="#f97316"/> 
+                <g class="spark-flash"><circle cx="31" cy="10" r="6" fill="#fff"/></g>
+            </svg>
+            <div class="text-2xl font-black tracking-tighter uppercase leading-none italic">J-BAY <br><span class="text-orange-600">WELDERS</span></div>
         </div>
 
-        <div class="hidden lg:flex gap-10 font-bold text-[11px] uppercase tracking-[0.2em] items-center">
-            <button onclick="switchTab('home')" class="nav-btn text-orange-600 border-b-2 border-orange-600 pb-1" id="btn-home">Home</button>
-            <button onclick="switchTab('services')" class="nav-btn hover:text-orange-600 transition" id="btn-services">Services</button>
-            <button onclick="switchTab('gallery')" class="nav-btn hover:text-orange-600 transition" id="btn-gallery">Project Gallery</button>
-            <button onclick="switchTab('tech')" class="nav-btn hover:text-orange-600 transition" id="btn-tech">Specs</button>
-            <a href="#quote-section" class="bg-orange-600 text-white px-8 py-3 rounded-sm hover:bg-slate-900 transition-all orange-glow uppercase">Get Quote</a>
+        <div class="hidden lg:flex gap-6 font-bold text-[10px] uppercase tracking-[0.2em] items-center">
+            <button onclick="switchTab('home')" class="nav-btn text-orange-600" id="btn-home">Home</button>
+            <button onclick="switchTab('gallery')" class="nav-btn" id="btn-gallery">Portfolio</button>
+            <button onclick="switchTab('tools')" class="nav-btn" id="btn-tools">Eng. Tools</button>
+            <button onclick="switchTab('timeline')" class="nav-btn" id="btn-timeline">Process</button>
+            <button onclick="switchTab('game')" class="nav-btn" id="btn-game">The Arcade</button>
+            <a href="https://wa.me/27663544654" class="bg-orange-600 text-white px-6 py-2 rounded-sm shadow-orange-500/50 shadow-lg">DIRECT LINE</a>
         </div>
     </nav>
 
-    <a href="tel:+27663544654" class="floating-call lg:hidden">
-        <span>📞</span> CALL NOW
-    </a>
-
     <main id="home" class="tab-content active">
-        <section class="hero-gradient h-[88vh] flex items-center px-6 lg:px-24">
+        <section class="hero-gradient h-[90vh] flex items-center px-6 lg:px-24 relative">
             <div class="max-w-4xl">
-                <p class="text-orange-500 font-black tracking-[0.6em] uppercase text-xs mb-6 underline">Certified Industrial Fabrication</p>
-                <h1 class="text-7xl lg:text-[10rem] font-black text-white leading-[0.85] uppercase mb-8 italic tracking-tighter">
-                    Heavy <br><span class="text-orange-600">Metal.</span>
-                </h1>
-                
-                <div class="bg-slate-900/80 backdrop-blur-lg p-10 border-l-[12px] border-orange-600 max-w-2xl mb-12 shadow-2xl">
-                    <p class="text-xl text-slate-100 font-light leading-relaxed">
-                        Professional welding and steel fabrication in Jeffreys Bay. We offer solid workmanship on property security gates, burglar bars, 
-                        trailers, and specialized stainless steel polishing.
-                    </p>
-                </div>
-
-                <div class="flex flex-wrap gap-6">
-                    <button onclick="switchTab('gallery')" class="bg-orange-600 text-white px-14 py-6 font-black text-lg hover:bg-white hover:text-orange-600 transition-all shadow-2xl uppercase tracking-widest">Gallery</button>
-                    <a href="https://wa.me/27663544654" class="bg-white text-slate-900 px-14 py-6 font-black text-lg hover:bg-slate-200 transition-all shadow-2xl uppercase tracking-widest">WhatsApp</a>
+                <p class="text-orange-500 font-black tracking-[0.8em] uppercase text-xs mb-4">Precision Engineering</p>
+                <h1 class="text-7xl lg:text-[11rem] font-black text-white leading-[0.8] uppercase mb-10 italic">Steel <br><span class="text-orange-600 italic">Masters.</span></h1>
+                <div class="bg-slate-900/90 p-10 border-l-[15px] border-orange-600 max-w-2xl text-white shadow-2xl">
+                    <p class="text-xl font-light opacity-90 leading-relaxed">Solid fabrication for J-Bay. We specialize in property security, mirror-finish marine stainless, and structural engineering.</p>
                 </div>
             </div>
         </section>
+    </main>
 
-        <section class="py-24 bg-white px-6 lg:px-24">
-            <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-20 items-center">
-                <div class="lg:w-1/2">
-                    <h2 class="text-5xl font-black uppercase mb-6 italic">Reliable <span class="text-orange-600">Workmanship</span></h2>
-                    <p class="text-slate-600 text-lg leading-relaxed mb-8">
-                        We specialise in stainless steel polishing, delivering clean finishes that last in coastal conditions. 
-                        Whether it is custom-built steelwork, reinforcements, or on-site welding, we get it done right the first time.
-                    </p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="p-6 bg-slate-100 border-l-4 border-slate-900 font-black uppercase text-xs tracking-widest">Property Security</div>
-                        <div class="p-6 bg-slate-100 border-l-4 border-orange-600 font-black uppercase text-xs tracking-widest">Marine Stainless</div>
+    <main id="gallery" class="tab-content py-24 px-6 lg:px-24">
+        <h2 class="text-6xl font-black uppercase italic mb-16 italic">Recent <span class="text-orange-600">Forge-Work</span></h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="image-frame"><img src="https://maps.app.goo.gl/avuxDuY1gm9pey8k6" onerror="this.src='https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=800'"></div>
+            <div class="image-frame"><img src="https://maps.app.goo.gl/A9uF715eZsZDCowE6" onerror="this.src='https://images.unsplash.com/photo-1516937941344-00b4e0337589?q=80&w=800'"></div>
+            <div class="image-frame"><img src="https://maps.app.goo.gl/t9Zjfm1UniHwHXHG7" onerror="this.src='https://images.unsplash.com/photo-1589939705384-5185138a04b9?q=80&w=800'"></div>
+            <div class="image-frame"><img src="https://maps.app.goo.gl/v86M8gNnycWFGGNQ7" onerror="this.src='https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800'"></div>
+            <div class="image-frame"><img src="https://maps.app.goo.gl/a16wwNC8cUtCK3xv6" onerror="this.src='https://images.unsplash.com/photo-1530124560676-586cad3ad784?q=80&w=800'"></div>
+            <div class="image-frame"><img src="https://maps.app.goo.gl/D2UUqKRRhVvcbwQo7" onerror="this.src='https://images.unsplash.com/photo-1534398079543-7ae6d016b86a?q=80&w=800'"></div>
+        </div>
+    </main>
+
+    <main id="tools" class="tab-content py-24 px-6 lg:px-24 bg-white">
+        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16">
+            <div>
+                <h2 class="text-4xl font-black uppercase mb-8 italic italic">Steel <span class="text-orange-600">Weight Calculator</span></h2>
+                <div class="p-8 bg-slate-900 text-white rounded-lg space-y-4">
+                    <select id="matType" class="w-full bg-slate-800 p-5 outline-none border-l-4 border-orange-600 font-bold uppercase text-xs">
+                        <option value="7850">Mild Steel (Standard)</option>
+                        <option value="8000">Stainless 316L (Marine)</option>
+                        <option value="2700">Aluminum 6061</option>
+                    </select>
+                    <input type="number" id="matLen" placeholder="Length (Meters)" class="w-full bg-slate-800 p-5 outline-none font-bold">
+                    <input type="number" id="matWidth" placeholder="Width/Dia (Meters)" class="w-full bg-slate-800 p-5 outline-none font-bold">
+                    <button onclick="calcSteel()" class="w-full bg-orange-600 py-5 font-black uppercase tracking-widest hover:bg-white hover:text-orange-600 transition">Analyze Weight</button>
+                    <div id="estResult" class="text-center text-4xl font-black text-orange-500 mt-4">--- KG</div>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-4xl font-black uppercase mb-8 italic">Material <span class="text-orange-600">Reference Chart</span></h2>
+                
+                <div class="space-y-4">
+                    <div class="stat-card">
+                        <p class="text-xs font-black text-slate-400">316L STAINLESS</p>
+                        <p class="font-bold">Extreme Salt-Air Corrosion Resistance (Mirror finish available)</p>
+                    </div>
+                    <div class="stat-card">
+                        <p class="text-xs font-black text-slate-400">MILD STEEL</p>
+                        <p class="font-bold">Structural Strength - Best for Security Gates & Fencing</p>
                     </div>
                 </div>
-                <div class="lg:w-1/2 image-frame">
-                    <img src="https://maps.app.goo.gl/8nmf9ZHkB5B59Bya9" onerror="this.src='https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1000'" alt="Project Image 0">
+            </div>
+        </div>
+    </main>
+
+    <main id="timeline" class="tab-content py-24 px-6 lg:px-24 bg-slate-50">
+        <h2 class="text-5xl font-black uppercase mb-16 text-center italic">The <span class="text-orange-600">Project Cycle</span></h2>
+        <div class="grid lg:grid-cols-4 gap-4">
+            <div class="bg-white p-8 border-b-8 border-slate-900 text-center">
+                <p class="text-4xl font-black text-orange-600 mb-2">01</p>
+                <p class="font-black uppercase text-xs">Briefing</p>
+            </div>
+            <div class="bg-white p-8 border-b-8 border-orange-600 text-center">
+                <p class="text-4xl font-black text-orange-600 mb-2">02</p>
+                <p class="font-black uppercase text-xs">Procurement</p>
+            </div>
+            <div class="bg-white p-8 border-b-8 border-slate-900 text-center">
+                <p class="text-4xl font-black text-orange-600 mb-2">03</p>
+                <p class="font-black uppercase text-xs">Fabrication</p>
+            </div>
+            <div class="bg-white p-8 border-b-8 border-orange-600 text-center">
+                <p class="text-4xl font-black text-orange-600 mb-2">04</p>
+                <p class="font-black uppercase text-xs">Installation</p>
+            </div>
+        </div>
+        
+    </main>
+
+    <main id="game" class="tab-content py-24 px-6 lg:px-24 bg-slate-950">
+        <div class="max-w-4xl mx-auto flex flex-col lg:flex-row gap-12 items-center">
+            <div class="lg:w-2/3 relative">
+                <canvas id="game-canvas" width="500" height="500" class="w-full"></canvas>
+                <div id="game-over-ui" class="game-over">
+                    <h3 class="text-5xl font-black mb-4">ARC BREAK!</h3>
+                    <p class="text-orange-500 font-bold mb-6">Score: <span id="final-score">0</span></p>
+                    <button onclick="startGame()" class="bg-orange-600 px-10 py-4 font-black uppercase">Re-Strike Arc</button>
                 </div>
             </div>
-        </section>
-    </main>
-
-    <main id="services" class="tab-content py-28 px-6 lg:px-24 bg-slate-50">
-        <h2 class="text-center text-6xl font-black uppercase italic mb-20 leading-none italic">Industrial <span class="text-orange-600">Capabilities</span></h2>
-        <div class="grid lg:grid-cols-3 gap-12">
-            <div class="bg-white p-10 shadow-xl border-t-8 border-slate-900">
-                <h3 class="text-2xl font-black uppercase mb-4 italic">Marine Steel</h3>
-                <p class="text-slate-500 mb-6 font-bold uppercase tracking-widest text-[10px]">316 Grade Mirror Finish</p>
-                <p class="text-slate-600">Precision fabrication for boats, coastal balustrades, and high-gloss stainless restoration.</p>
-            </div>
-            <div class="bg-white p-10 shadow-xl border-t-8 border-orange-600">
-                <h3 class="text-2xl font-black uppercase mb-4 italic">Security</h3>
-                <p class="text-slate-500 mb-6 font-bold uppercase tracking-widest text-[10px]">Heavy Duty Iron</p>
-                <p class="text-slate-600">Custom security gates, automated entrances, and reinforced burglar bars for Kouga homes.</p>
-            </div>
-            <div class="bg-white p-10 shadow-xl border-t-8 border-slate-900">
-                <h3 class="text-2xl font-black uppercase mb-4 italic">Custom Fabrication</h3>
-                <p class="text-slate-500 mb-6 font-bold uppercase tracking-widest text-[10px]">Structural Steel</p>
-                <p class="text-slate-600">Trailer chassis repair, 4x4 mods, canopy frames, and general industrial engineering.</p>
-            </div>
-        </div>
-    </main>
-
-    <main id="gallery" class="tab-content py-28 px-6 lg:px-24 bg-slate-900">
-        <h2 class="text-center text-6xl font-black uppercase mb-20 italic text-white">Project <span class="text-orange-600">Portfolio</span></h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="image-frame"><img src="https://maps.app.goo.gl/avuxDuY1gm9pey8k6" onerror="this.src='https://images.unsplash.com/photo-1516937941344-00b4e0337589?q=80&w=800'" alt="Project 1"></div>
-            <div class="image-frame"><img src="https://maps.app.goo.gl/A9uF715eZsZDCowE6" onerror="this.src='https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=800'" alt="Project 2"></div>
-            <div class="image-frame"><img src="https://maps.app.goo.gl/t9Zjfm1UniHwHXHG7" onerror="this.src='https://images.unsplash.com/photo-1589939705384-5185138a04b9?q=80&w=800'" alt="Project 3"></div>
-            <div class="image-frame"><img src="https://maps.app.goo.gl/v86M8gNnycWFGGNQ7" onerror="this.src='https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800'" alt="Project 4"></div>
-            <div class="image-frame"><img src="https://maps.app.goo.gl/a16wwNC8cUtCK3xv6" onerror="this.src='https://images.unsplash.com/photo-1530124560676-586cad3ad784?q=80&w=800'" alt="Project 5"></div>
-            <div class="image-frame"><img src="https://maps.app.goo.gl/D2UUqKRRhVvcbwQo7" onerror="this.src='https://images.unsplash.com/photo-1534398079543-7ae6d016b86a?q=80&w=800'" alt="Project 6"></div>
-        </div>
-    </main>
-
-    <main id="tech" class="tab-content py-28 px-6 lg:px-24">
-        <h2 class="text-5xl font-black uppercase italic mb-12">Quality <span class="text-orange-600">Standards</span></h2>
-        <div class="bg-white shadow-2xl">
-            <div class="p-8 border-b flex justify-between items-center">
-                <span class="font-black uppercase tracking-widest text-xs">Standard</span>
-                <span class="font-black uppercase tracking-widest text-xs">Certification</span>
-            </div>
-            <div class="p-8 border-b flex justify-between items-center bg-slate-50">
-                <span class="text-2xl font-black uppercase italic">Marine Stainless 316L</span>
-                <span class="text-orange-600 font-bold">In-Stock</span>
-            </div>
-            <div class="p-8 border-b flex justify-between items-center">
-                <span class="text-2xl font-black uppercase italic">Structural S355JR</span>
-                <span class="text-orange-600 font-bold">Certified</span>
-            </div>
-            <div class="p-8 flex justify-between items-center bg-slate-50">
-                <span class="text-2xl font-black uppercase italic">TIG / MIG Precision</span>
-                <span class="text-orange-600 font-bold">Standard</span>
-            </div>
-        </div>
-    </main>
-
-    <section id="quote-section" class="py-32 bg-slate-900 text-white px-6">
-        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-24 items-center">
-            <div>
-                <h2 class="text-8xl font-black uppercase italic mb-8 leading-none">Book <br><span class="text-orange-600">Now.</span></h2>
-                <p class="text-2xl text-slate-400 font-light mb-10 italic">Direct management review on all project briefs.</p>
-                <div class="p-8 border-2 border-orange-600 inline-block">
-                    <p class="text-sm uppercase tracking-[0.5em] mb-2 font-bold">Phone Support</p>
-                    <p class="text-3xl font-black">+27 66 354 4654</p>
+            <div class="lg:w-1/3 text-white">
+                <h3 class="text-3xl font-black uppercase mb-6 italic">Top <span class="text-orange-600 italic">Welders</span></h3>
+                <div id="leaderboard" class="space-y-2 font-mono text-sm uppercase">
+                    <div class="flex justify-between border-b border-slate-800 pb-2"><span>1. J-Bay Legend</span><span>950</span></div>
+                    <div class="flex justify-between border-b border-slate-800 pb-2"><span>2. SteelKing</span><span>720</span></div>
+                </div>
+                <div class="mt-10 p-6 bg-orange-600/10 border border-orange-600 text-xs">
+                    <p class="font-black mb-2">PROMO:</p>
+                    Score over 500 to unlock a secret 5% discount code!
                 </div>
             </div>
-            <form id="masterForm" class="bg-white p-12 shadow-2xl space-y-4 text-slate-900">
-                <input type="text" id="name" placeholder="Name" required class="w-full p-5 border bg-slate-50 outline-none font-bold">
-                <input type="text" id="area" placeholder="Area (e.g. Marina Martinique)" required class="w-full p-5 border bg-slate-50 outline-none font-bold">
-                <select id="service" class="w-full p-5 border bg-slate-50 outline-none font-bold uppercase text-xs">
-                    <option>Security Gates</option>
-                    <option>Stainless Polishing</option>
-                    <option>Trailer Repairs</option>
-                    <option>Structural Steel</option>
-                </select>
-                <textarea id="msg" placeholder="Project details..." required class="w-full p-5 border bg-slate-50 h-32 outline-none font-bold"></textarea>
-                <button type="submit" class="w-full bg-orange-600 text-white py-6 font-black uppercase tracking-[0.4em] hover:bg-slate-900 transition-all">Submit Brief</button>
+        </div>
+    </main>
+
+    <section class="py-24 bg-slate-900 text-white px-6">
+        <div class="max-w-4xl mx-auto">
+            <form id="masterForm" class="bg-white p-10 space-y-6 text-slate-900 shadow-2xl">
+                <h2 class="text-4xl font-black uppercase italic mb-8">Ready to <span class="text-orange-600">Build?</span></h2>
+                <div class="grid lg:grid-cols-2 gap-4">
+                    <input type="text" id="name" placeholder="Full Name" required class="p-4 bg-slate-50 border outline-none font-bold">
+                    <input type="text" id="area" placeholder="Project Area" required class="p-4 bg-slate-50 border outline-none font-bold">
+                </div>
+                <textarea id="msg" placeholder="Tell us about the project dimensions..." class="w-full p-4 bg-slate-50 border h-32 outline-none font-bold"></textarea>
+                <button type="submit" class="w-full bg-orange-600 text-white py-6 font-black uppercase tracking-widest shadow-xl">Get Official Quote</button>
             </form>
         </div>
     </section>
 
-    <footer class="bg-white py-16 px-6 border-t text-center lg:text-left">
-        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-8">
-            <p class="font-black text-3xl italic uppercase leading-none italic">J-BAY <span class="text-orange-600">WELDERS</span></p>
-            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400">© 2026 J-Bay Welders Engineering | Kouga District</p>
-        </div>
-    </footer>
-
-    <div class="fixed bottom-8 right-8 z-[3000]">
-        <button onclick="toggleBot()" class="bg-orange-600 text-white w-20 h-20 rounded-full shadow-2xl flex items-center justify-center text-3xl hover:scale-110 transition-all">⚡</button>
-        <div id="assistant-panel" class="absolute bottom-24 right-0 w-80 bg-white shadow-2xl rounded-xl border flex-col overflow-hidden">
-            <div class="bg-slate-900 p-5 text-white font-black uppercase text-xs flex justify-between items-center italic">
-                <span>Fabrication Assistant</span>
-                <button onclick="toggleBot()">✕</button>
-            </div>
-            <div class="p-6 space-y-3">
-                <button onclick="chatGo('Emergency Repair')" class="w-full text-left p-4 border font-black uppercase text-[10px] hover:bg-orange-600 hover:text-white transition italic">Emergency Repair</button>
-                <button onclick="chatGo('Custom Quote')" class="w-full text-left p-4 border font-black uppercase text-[10px] hover:bg-orange-600 hover:text-white transition italic">Custom Quote</button>
-            </div>
-        </div>
-    </div>
-
     <script>
-        function switchTab(tabId) {
+        // TAB LOGIC
+        function switchTab(id) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('text-orange-600', 'border-b-2', 'border-orange-600'));
-            document.getElementById(tabId).classList.add('active');
-            document.getElementById('btn-' + tabId).classList.add('text-orange-600', 'border-b-2', 'border-orange-600');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('text-orange-600'));
+            document.getElementById(id).classList.add('active');
+            document.getElementById('btn-' + id).classList.add('text-orange-600');
+            if(id === 'game') startGame();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function toggleBot() { document.getElementById('assistant-panel').classList.toggle('active'); }
-        
-        function chatGo(topic) {
-            window.open(`https://wa.me/27663544654?text=Hi, I need assistance with: ${topic}`, '_blank');
+        // STEEL CALC LOGIC
+        function calcSteel() {
+            const d = document.getElementById('matType').value;
+            const l = document.getElementById('matLen').value;
+            const w = document.getElementById('matWidth').value;
+            const weight = (l * w * 0.01 * d).toFixed(2); // Simplified volumetric calc
+            document.getElementById('estResult').innerText = weight + " KG";
         }
 
-        document.getElementById('masterForm').onsubmit = function(e) {
+        // GAME LOGIC
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d');
+        let score = 0, targets = [], active = false;
+
+        function startGame() {
+            score = 0; targets = []; active = true;
+            document.getElementById('game-over-ui').style.display = 'none';
+            requestAnimationFrame(gameLoop);
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            targets.forEach((t, i) => {
+                if(Math.hypot(t.x - x, t.y - y) < t.r) {
+                    targets.splice(i, 1);
+                    score += 50;
+                }
+            });
+        });
+
+        function gameLoop() {
+            if(!active) return;
+            ctx.fillStyle = '#020617'; ctx.fillRect(0, 0, 500, 500);
+            if(Math.random() < 0.03) targets.push({ x: Math.random() * 500, y: 0, r: 25, s: 3 + (score/200) });
+            
+            targets.forEach((t, i) => {
+                t.y += t.s;
+                ctx.beginPath(); ctx.arc(t.x, t.y, t.r, 0, 6.28);
+                ctx.fillStyle = '#f97316'; ctx.fill();
+                ctx.strokeStyle = '#fff'; ctx.stroke();
+                if(t.y > 500) {
+                    active = false;
+                    document.getElementById('final-score').innerText = score;
+                    document.getElementById('game-over-ui').style.display = 'block';
+                }
+            });
+            ctx.fillStyle = "white"; ctx.font = "bold 20px Outfit"; ctx.fillText("VOLTS: " + score, 20, 40);
+            requestAnimationFrame(gameLoop);
+        }
+
+        // WHATSAPP
+        document.getElementById('masterForm').onsubmit = (e) => {
             e.preventDefault();
-            const text = `*PORTAL REQUEST*%0A*Name:* ${document.getElementById('name').value}%0A*Area:* ${document.getElementById('area').value}%0A*Service:* ${document.getElementById('service').value}%0A*Notes:* ${document.getElementById('msg').value}`;
+            const text = `*QUOTE REQUEST*%0A*Name:* ${document.getElementById('name').value}%0A*Details:* ${document.getElementById('msg').value}`;
             window.open(`https://wa.me/27663544654?text=${text}`, '_blank');
-        };
+        }
     </script>
 </body>
 </html>
